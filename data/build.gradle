@@ -1,0 +1,41 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Versions.compileSdk
+
+    defaultConfig {
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':domain')
+
+    kapt Depends.roomCompiler
+
+    implementation Depends.kotlin
+    implementation Depends.rxJava
+    implementation Depends.annotations
+    implementation Depends.room
+    implementation Depends.roomRxJava
+    implementation(Depends.roomRuntime, {
+        exclude group: 'androidx.annotation', module: 'annotation'
+    })
+
+    testImplementation Depends.junit
+    testImplementation Depends.mockito
+    testImplementation Depends.roomTesting
+}
