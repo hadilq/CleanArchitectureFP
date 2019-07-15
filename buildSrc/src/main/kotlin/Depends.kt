@@ -14,6 +14,9 @@ object Depends {
     const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val roomRxJava = "androidx.room:room-rxjava2:${Versions.room}"
+    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    const val retrofitRxJava2Adapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
 
     const val junit = "junit:junit:${Versions.junit}"
     const val mockito = "com.nhaarman:mockito-kotlin:${Versions.mockito}"

@@ -27,6 +27,8 @@ dependencies {
     kapt Depends.roomCompiler
 
     implementation Depends.kotlin
+    implementation Depends.retrofit
+    implementation Depends.retrofitGsonConverter
     implementation Depends.rxJava
     implementation Depends.annotations
     implementation Depends.room

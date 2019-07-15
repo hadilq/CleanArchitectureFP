@@ -14,6 +14,7 @@ object Versions {
     const val dagger = "2.23.2"
     const val lifecycle = "2.2.0-alpha02"
     const val room = "2.2.0-alpha01"
+    const val retrofit = "2.6.0"
 
     //Unit Testing
     const val junit = "4.12"
