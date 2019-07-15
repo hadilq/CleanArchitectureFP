@@ -28,6 +28,7 @@ import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
+import io.reactivex.Maybe
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
 import org.junit.After
@@ -44,9 +45,9 @@ class GetTrackImplTest {
     @Before
     fun setup() {
         repository = mock()
-        usecase = GetTracksImpl(repository, object : SchedulerHandler<Album> {
+        usecase = GetTracksImpl(repository, object : SchedulerHandler<Pair<String, Album>> {
 
-            override fun apply(upstream: Flowable<Album>): Publisher<Album> {
+            override fun apply(upstream: Flowable<Pair<String, Album>>): Publisher<Pair<String, Album>> {
                 return upstream
             }
         })
@@ -66,10 +67,17 @@ class GetTrackImplTest {
         val artist = Artist("", "Test", "", "", "", "", "")
         val album = Album("", "Test", "", "", "", "", "", artist)
         val track = Track("", "Test", "", album, artist, emptyList())
-        `when`(repository.fetchTracks()).doReturn(FlowableTransformer { Flowable.just(track) })
+        `when`(repository.fetchTracks()).doReturn(FlowableTransformer {
+            Flowable.just(
+                Pair(
+                    Flowable.just(track),
+                    Maybe.empty()
+                )
+            )
+        })
 
         //When
-        Flowable.just(album).compose(usecase.tracks()).test()
+        Flowable.just(Pair("", album)).compose(usecase.tracks()).test()
 
         // Then
         verify(repository).fetchTracks()
@@ -81,16 +89,16 @@ class GetTrackImplTest {
         val artist = Artist("", "Test", "", "", "", "", "")
         val album = Album("", "Test", "", "", "", "", "", artist)
         val track = Track("", "Test", "", album, artist, emptyList())
-        val flowableFactory: () -> Flowable<Track> = mock()
+        val flowableFactory: () -> Flowable<Pair<Flowable<Track>, Maybe<Throwable>>> = mock()
         `when`(repository.fetchTracks()).doReturn(
             FlowableTransformer {
                 flowableFactory()
             }
         )
-        `when`(flowableFactory.invoke()).doReturn(Flowable.just(track))
+        `when`(flowableFactory.invoke()).doReturn(Flowable.just(Pair(Flowable.just(track), Maybe.empty())))
 
         //When
-        Flowable.fromArray(album, album).compose(usecase.tracks()).test()
+        Flowable.fromArray(Pair("", album), Pair("", album)).compose(usecase.tracks()).test()
 
         // Then
         verify(repository).fetchTracks()

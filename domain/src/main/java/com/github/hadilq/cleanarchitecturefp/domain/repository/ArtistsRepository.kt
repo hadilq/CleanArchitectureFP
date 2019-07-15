@@ -24,4 +24,6 @@ import io.reactivex.Maybe
 interface ArtistsRepository {
 
     fun fetchArtists(): FlowableTransformer<String, Pair<Flowable<Artist>, Maybe<Throwable>>>
+
+    fun fetchNextArtists(): FlowableTransformer<Unit, Pair<Flowable<Artist>, Maybe<Throwable>>>
 }

@@ -18,9 +18,15 @@ package com.github.hadilq.cleanarchitecturefp.domain.repository
 
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
+import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
+import io.reactivex.Maybe
 
 interface AlbumsRepository {
 
-    fun fetchAlbums(): FlowableTransformer<Artist, Album>
+    fun fetchAlbum(): FlowableTransformer<Pair<String, Artist>, Pair<Flowable<Album>, Maybe<Throwable>>>
+
+    fun fetchAlbums(): FlowableTransformer<Artist, Pair<Flowable<Album>, Maybe<Throwable>>>
+
+    fun fetchNextAlbums(): FlowableTransformer<Unit, Pair<Flowable<Album>, Maybe<Throwable>>>
 }

@@ -18,9 +18,11 @@ package com.github.hadilq.cleanarchitecturefp.domain.usecase
 
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
+import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
+import io.reactivex.Maybe
 
 interface GetTracks {
 
-    fun tracks(): FlowableTransformer<Album, Track>
+    fun tracks(): FlowableTransformer<Pair<String, Album>, Pair<Flowable<Track>, Maybe<Throwable>>>
 }

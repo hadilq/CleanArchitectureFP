@@ -22,14 +22,17 @@ import com.github.hadilq.cleanarchitecturefp.domain.repository.TracksRepository
 import com.github.hadilq.cleanarchitecturefp.domain.usecase.GetTracks
 import com.github.hadilq.cleanarchitecturefp.domain.util.SchedulerHandler
 import com.github.hadilq.cleanarchitecturefp.domain.util.SwitchFlowableTransformer
+import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
+import io.reactivex.Maybe
 
 class GetTracksImpl(
     private val repository: TracksRepository,
-    private val schedulers: SchedulerHandler<Album>
+    private val schedulers: SchedulerHandler<Pair<String, Album>>
 ) : GetTracks {
 
-    override fun tracks(): FlowableTransformer<Album, Track> = FlowableTransformer { query ->
-        query.compose(schedulers).compose(SwitchFlowableTransformer(repository.fetchTracks()))
-    }
+    override fun tracks(): FlowableTransformer<Pair<String, Album>, Pair<Flowable<Track>, Maybe<Throwable>>> =
+        FlowableTransformer { query ->
+            query.compose(schedulers).compose(SwitchFlowableTransformer(repository.fetchTracks()))
+        }
 }

@@ -23,5 +23,7 @@ import io.reactivex.Maybe
 
 interface SearchArtists {
 
-    fun findArtist(): FlowableTransformer<String, Pair<Flowable<Artist>, Maybe<Throwable>>>
+    fun findArtists(): FlowableTransformer<String, Pair<Flowable<Artist>, Maybe<Throwable>>>
+
+    fun findNestArtists(): FlowableTransformer<Unit, Pair<Flowable<Artist>, Maybe<Throwable>>>
 }

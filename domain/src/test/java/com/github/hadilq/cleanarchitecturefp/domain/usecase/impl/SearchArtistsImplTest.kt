@@ -43,9 +43,9 @@ class SearchArtistsImplTest {
     @Before
     fun setup() {
         repository = mock()
-        usecase = SearchArtistsImpl(repository, object : SchedulerHandler<String> {
+        usecase = SearchArtistsImpl(repository, object : SchedulerHandler<Pair<Flowable<Artist>, Maybe<Throwable>>> {
 
-            override fun apply(upstream: Flowable<String>): Publisher<String> {
+            override fun apply(upstream: Flowable<Pair<Flowable<Artist>, Maybe<Throwable>>>): Publisher<Pair<Flowable<Artist>, Maybe<Throwable>>> {
                 return upstream
             }
         })
@@ -75,7 +75,7 @@ class SearchArtistsImplTest {
         )
 
         //When
-        Flowable.just("T").compose(usecase.findArtist()).test()
+        Flowable.just("T").compose(usecase.findArtists()).test()
 
         // Then
         verify(repository).fetchArtists()
@@ -101,7 +101,7 @@ class SearchArtistsImplTest {
         )
 
         //When
-        Flowable.fromArray("T", "U").compose(usecase.findArtist()).test()
+        Flowable.fromArray("T", "U").compose(usecase.findArtists()).test()
 
         // Then
         verify(repository).fetchArtists()

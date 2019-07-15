@@ -27,6 +27,7 @@ import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
+import io.reactivex.Maybe
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
 import org.junit.After
@@ -43,9 +44,9 @@ class GetAlbumImplTest {
     @Before
     fun setup() {
         repository = mock()
-        usecase = GetAlbumsImpl(repository, object : SchedulerHandler<Artist> {
+        usecase = GetAlbumsImpl(repository, object : SchedulerHandler<Pair<Flowable<Album>, Maybe<Throwable>>> {
 
-            override fun apply(upstream: Flowable<Artist>): Publisher<Artist> {
+            override fun apply(upstream: Flowable<Pair<Flowable<Album>, Maybe<Throwable>>>): Publisher<Pair<Flowable<Album>, Maybe<Throwable>>> {
                 return upstream
             }
         })
@@ -64,7 +65,14 @@ class GetAlbumImplTest {
         //Given
         val artist = Artist("", "Test", "", "", "", "", "")
         val album = Album("", "Test", "", "", "", "", "", artist)
-        `when`(repository.fetchAlbums()).doReturn(FlowableTransformer { Flowable.just(album) })
+        `when`(repository.fetchAlbums()).doReturn(FlowableTransformer {
+            Flowable.just(
+                Pair(
+                    Flowable.just(album),
+                    Maybe.empty()
+                )
+            )
+        })
 
         //When
         Flowable.just(artist).compose(usecase.albums()).test()
@@ -78,13 +86,13 @@ class GetAlbumImplTest {
         //Given
         val artist = Artist("", "Test", "", "", "", "", "")
         val album = Album("", "Test", "", "", "", "", "", artist)
-        val flowableFactory: () -> Flowable<Album> = mock()
+        val flowableFactory: () -> Flowable<Pair<Flowable<Album>, Maybe<Throwable>>> = mock()
         `when`(repository.fetchAlbums()).doReturn(
             FlowableTransformer {
                 flowableFactory()
             }
         )
-        `when`(flowableFactory.invoke()).doReturn(Flowable.just(album))
+        `when`(flowableFactory.invoke()).doReturn(Flowable.just(Pair(Flowable.just(album), Maybe.empty())))
 
         //When
         Flowable.fromArray(artist, artist).compose(usecase.albums()).test()

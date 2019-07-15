@@ -24,14 +24,20 @@ import com.github.hadilq.cleanarchitecturefp.domain.util.SchedulerHandler
 import com.github.hadilq.cleanarchitecturefp.domain.util.SwitchFlowableTransformer
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
-import io.reactivex.SingleTransformer
+import io.reactivex.Maybe
 
 class GetAlbumsImpl(
     private val repository: AlbumsRepository,
-    private val schedulers: SchedulerHandler<Artist>
+    private val schedulers: SchedulerHandler<Pair<Flowable<Album>, Maybe<Throwable>>>
 ) : GetAlbums {
 
-    override fun albums(): FlowableTransformer<Artist, Album> = FlowableTransformer { query ->
-        query.compose(schedulers).compose(SwitchFlowableTransformer(repository.fetchAlbums()))
-    }
+    override fun albums(): FlowableTransformer<Artist, Pair<Flowable<Album>, Maybe<Throwable>>> =
+        FlowableTransformer { query ->
+            query.compose(SwitchFlowableTransformer(repository.fetchAlbums())).compose(schedulers)
+        }
+
+    override fun nextAlbums(): FlowableTransformer<Unit, Pair<Flowable<Album>, Maybe<Throwable>>> =
+        FlowableTransformer { query ->
+            query.compose(SwitchFlowableTransformer(repository.fetchNextAlbums())).compose(schedulers)
+        }
 }

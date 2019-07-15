@@ -18,9 +18,13 @@ package com.github.hadilq.cleanarchitecturefp.domain.usecase
 
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
+import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
+import io.reactivex.Maybe
 
 interface GetAlbums {
 
-    fun albums(): FlowableTransformer<Artist, Album>
+    fun albums(): FlowableTransformer<Artist, Pair<Flowable<Album>, Maybe<Throwable>>>
+
+    fun nextAlbums(): FlowableTransformer<Unit, Pair<Flowable<Album>, Maybe<Throwable>>>
 }

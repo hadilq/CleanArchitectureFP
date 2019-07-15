@@ -27,11 +27,16 @@ import io.reactivex.Maybe
 
 class SearchArtistsImpl(
     private val repository: ArtistsRepository,
-    private val schedulers: SchedulerHandler<String>
+    private val schedulers: SchedulerHandler<Pair<Flowable<Artist>, Maybe<Throwable>>>
 ) : SearchArtists {
 
-    override fun findArtist(): FlowableTransformer<String, Pair<Flowable<Artist>, Maybe<Throwable>>> =
+    override fun findArtists(): FlowableTransformer<String, Pair<Flowable<Artist>, Maybe<Throwable>>> =
         FlowableTransformer { query ->
-            query.compose(schedulers).compose(SwitchFlowableTransformer(repository.fetchArtists()))
+            query.compose(SwitchFlowableTransformer(repository.fetchArtists())).compose(schedulers)
+        }
+
+    override fun findNestArtists(): FlowableTransformer<Unit, Pair<Flowable<Artist>, Maybe<Throwable>>> =
+        FlowableTransformer { query ->
+            query.compose(SwitchFlowableTransformer(repository.fetchNextArtists())).compose(schedulers)
         }
 }
