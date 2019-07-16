@@ -67,7 +67,7 @@ class AlbumDataSourceImplTest {
         val dataSource = AlbumDataSourceImpl(api)
         val artist = Artist("T", "", "", "", "", "", "")
 
-        val test = Flowable.just(artist).compose(dataSource.fetchAlbums()).test()
+        val test = Flowable.just(artist.id).compose(dataSource.fetchAlbums()).test()
 
         test.assertComplete()
         test.assertNoErrors()

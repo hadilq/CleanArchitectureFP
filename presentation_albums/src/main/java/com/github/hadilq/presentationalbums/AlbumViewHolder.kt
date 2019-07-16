@@ -1,6 +1,6 @@
 package com.github.hadilq.presentationalbums
 
-import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.presentationcommon.Action
@@ -12,7 +12,7 @@ import io.reactivex.Observable
 import kotlinx.android.synthetic.main.album.view.*
 
 class AlbumViewHolder(
-    parent: View,
+    parent: ViewGroup,
     actionStream: (Observable<Action>) -> Unit,
     private val picasso: Picasso
 ) : RecyclerView.ViewHolder(parent.inflate(R.layout.album)) {

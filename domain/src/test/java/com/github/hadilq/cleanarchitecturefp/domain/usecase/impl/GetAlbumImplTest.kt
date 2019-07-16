@@ -75,7 +75,7 @@ class GetAlbumImplTest {
         })
 
         //When
-        Flowable.just(artist).compose(usecase.albums()).test()
+        Flowable.just(artist.id).compose(usecase.albums()).test()
 
         // Then
         verify(repository).fetchAlbums()
@@ -95,7 +95,7 @@ class GetAlbumImplTest {
         `when`(flowableFactory.invoke()).doReturn(Flowable.just(Pair(Flowable.just(album), Maybe.empty())))
 
         //When
-        Flowable.fromArray(artist, artist).compose(usecase.albums()).test()
+        Flowable.fromArray(artist.id, artist.id).compose(usecase.albums()).test()
 
         // Then
         verify(repository).fetchAlbums()
