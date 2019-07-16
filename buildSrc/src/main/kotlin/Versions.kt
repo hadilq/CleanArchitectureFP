@@ -11,10 +11,13 @@ object Versions {
     //Libraries
     const val appCompat = "1.0.2"
     const val constraintLayout = "2.0.0-alpha4"
+    const val materialDesign = "1.1.0-alpha08"
+    const val rxBinding = "2.2.0"
     const val dagger = "2.23.2"
     const val lifecycle = "2.2.0-alpha02"
     const val room = "2.2.0-alpha01"
     const val retrofit = "2.6.0"
+    const val picasso = "2.71828"
 
     //Unit Testing
     const val junit = "4.12"

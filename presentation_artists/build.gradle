@@ -22,12 +22,20 @@ android {
 
 dependencies {
     implementation project(':domain')
+    implementation project(':presentation_common')
 
     kapt Depends.lifecycleCompiler
 
     implementation Depends.appcompat
     implementation Depends.lifecycle
+    implementation Depends.materialDesign
+    implementation Depends.constraintLayout
+    implementation Depends.picasso
+    implementation Depends.rxBinding
     implementation Depends.rxJava
+    implementation Depends.dagger
+    implementation Depends.daggerAndroid
+    implementation Depends.annotations
 
     testImplementation Depends.junit
 

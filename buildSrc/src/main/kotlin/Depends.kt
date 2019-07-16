@@ -4,7 +4,10 @@ object Depends {
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val lifecycle = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
     const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
+    const val materialDesign = "com.google.android.material:material:${Versions.materialDesign}"
     const val rxJava = "io.reactivex.rxjava2:rxjava:2.2.7"
+    const val rxBinding = "com.jakewharton.rxbinding2:rxbinding:${Versions.rxBinding}"
+    const val rxBindingAppCompat = "com.jakewharton.rxbinding2:rxbinding-appcompat:${Versions.rxBinding}"
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     const val daggerAndroid = "com.google.dagger:dagger-android-support:${Versions.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
@@ -17,6 +20,7 @@ object Depends {
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
     const val retrofitRxJava2Adapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
+    const val picasso = "com.squareup.picasso:picasso:${Versions.picasso}"
 
     const val junit = "junit:junit:${Versions.junit}"
     const val mockito = "com.nhaarman:mockito-kotlin:${Versions.mockito}"

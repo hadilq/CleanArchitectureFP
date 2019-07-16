@@ -26,8 +26,13 @@ dependencies {
     kapt Depends.lifecycleCompiler
 
     implementation Depends.appcompat
+    implementation Depends.materialDesign
     implementation Depends.lifecycle
+    implementation Depends.picasso
     implementation Depends.rxJava
+    implementation Depends.dagger
+    implementation Depends.daggerAndroid
+    implementation Depends.annotations
 
     testImplementation Depends.junit
 

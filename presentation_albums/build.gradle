@@ -22,6 +22,7 @@ android {
 
 dependencies {
     implementation project(':domain')
+    implementation project(':presentation_common')
 
     kapt Depends.lifecycleCompiler
 

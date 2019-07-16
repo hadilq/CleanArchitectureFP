@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">presentation-common</string>
+    <string name="app_name">Clean Architecture - FP</string>
+    <string name="retry">Retry</string>
+    <string name="network_error">An error is happened. Please try again!</string>
 </resources>
