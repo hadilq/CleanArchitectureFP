@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import com.github.hadilq.presentationcommon.BaseActivity
+import com.github.hadilq.presentationcommon.IntentFactory
 import com.jakewharton.rxbinding2.widget.RxTextView
 import kotlinx.android.synthetic.main.artists_activity.*
 import javax.inject.Inject
@@ -15,6 +16,8 @@ class ArtistsActivity : BaseActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
     lateinit var adapter: ArtistsAdapter
+    @Inject
+    lateinit var intentFactory: IntentFactory
 
     private lateinit var viewModel: ArtistsViewModel
 
@@ -25,6 +28,7 @@ class ArtistsActivity : BaseActivity() {
         viewModel = viewModel(viewModelFactory) {
             artistsLiveData().observe(::artistsListArrived)
             networkErrorLiveData().observe(::onNetworkError)
+            openAlbumsLiveEvent().observe(::onOpenAlbums)
         }
 
         setupSearchView()
@@ -37,6 +41,12 @@ class ArtistsActivity : BaseActivity() {
 
     private fun onNetworkError(@Suppress("UNUSED_PARAMETER") throwable: Throwable) {
         showFailure(artistsLayout, R.string.network_error, viewModel::retry)
+    }
+
+    private fun onOpenAlbums(artistId: String) {
+        val intent = intentFactory.create(IntentFactory.Page.ALBUMS)
+        intent.putExtra(IntentFactory.BundleKey.ALBUMS_ARTIST_ID.KEY, artistId)
+        startActivity(intent)
     }
 
     private fun setupRecyclerView() {

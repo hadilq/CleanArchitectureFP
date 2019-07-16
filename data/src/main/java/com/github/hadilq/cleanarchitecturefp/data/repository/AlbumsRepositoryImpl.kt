@@ -39,7 +39,7 @@ class AlbumsRepositoryImpl(
                 .doOnError { e -> networkErrorsProcessor.offer(e) }
         }
 
-    override fun fetchAlbums(): FlowableTransformer<Artist, Pair<Flowable<Album>, Maybe<Throwable>>> =
+    override fun fetchAlbums(): FlowableTransformer<String, Pair<Flowable<Album>, Maybe<Throwable>>> =
         fetchWith(dataSource.fetchAlbums())
 
     override fun fetchNextAlbums(): FlowableTransformer<Unit, Pair<Flowable<Album>, Maybe<Throwable>>> =

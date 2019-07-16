@@ -24,7 +24,7 @@ interface AlbumDataSource {
 
     fun fetchAlbum(): FlowableTransformer<String, Album>
 
-    fun fetchAlbums(): FlowableTransformer<Artist, Album>
+    fun fetchAlbums(): FlowableTransformer<String, Album>
 
     fun fetchNextAlbums(): FlowableTransformer<Unit, Album>
 }

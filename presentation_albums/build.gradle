@@ -28,7 +28,14 @@ dependencies {
 
     implementation Depends.appcompat
     implementation Depends.lifecycle
+    implementation Depends.materialDesign
+    implementation Depends.constraintLayout
+    implementation Depends.picasso
+    implementation Depends.rxBinding
     implementation Depends.rxJava
+    implementation Depends.dagger
+    implementation Depends.daggerAndroid
+    implementation Depends.annotations
 
     testImplementation Depends.junit
 

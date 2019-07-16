@@ -24,7 +24,7 @@ import io.reactivex.Maybe
 
 interface GetAlbums {
 
-    fun albums(): FlowableTransformer<Artist, Pair<Flowable<Album>, Maybe<Throwable>>>
+    fun albums(): FlowableTransformer<String, Pair<Flowable<Album>, Maybe<Throwable>>>
 
     fun nextAlbums(): FlowableTransformer<Unit, Pair<Flowable<Album>, Maybe<Throwable>>>
 }

@@ -31,7 +31,7 @@ class GetAlbumsImpl(
     private val schedulers: SchedulerHandler<Pair<Flowable<Album>, Maybe<Throwable>>>
 ) : GetAlbums {
 
-    override fun albums(): FlowableTransformer<Artist, Pair<Flowable<Album>, Maybe<Throwable>>> =
+    override fun albums(): FlowableTransformer<String, Pair<Flowable<Album>, Maybe<Throwable>>> =
         FlowableTransformer { query ->
             query.compose(SwitchFlowableTransformer(repository.fetchAlbums())).compose(schedulers)
         }

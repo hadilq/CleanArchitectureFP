@@ -27,7 +27,7 @@ interface AlbumsRepository {
 
     fun fetchAlbum(): FlowableTransformer<String, Pair<Single<Album>, Maybe<Throwable>>>
 
-    fun fetchAlbums(): FlowableTransformer<Artist, Pair<Flowable<Album>, Maybe<Throwable>>>
+    fun fetchAlbums(): FlowableTransformer<String, Pair<Flowable<Album>, Maybe<Throwable>>>
 
     fun fetchNextAlbums(): FlowableTransformer<Unit, Pair<Flowable<Album>, Maybe<Throwable>>>
 }
