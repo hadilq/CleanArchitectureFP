@@ -24,6 +24,6 @@ object Depends {
     const val roomTesting = "androidx.room:room-testing:${Versions.room}"
 
     const val testRunner = "androidx.test:runner:${Versions.testRunner}"
-    const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
 
 }

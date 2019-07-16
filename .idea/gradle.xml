@@ -12,6 +12,10 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/presentation_album_details" />
+            <option value="$PROJECT_DIR$/presentation_albums" />
+            <option value="$PROJECT_DIR$/presentation_artists" />
+            <option value="$PROJECT_DIR$/presentation_common" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

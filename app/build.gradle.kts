@@ -40,10 +40,10 @@ dependencies {
 
     implementation(project(":domain"))
     implementation(project(":data"))
-//    implementation(project(":presentation_common"))
-//    implementation(project(":presentation_artists"))
-//    implementation(project(":presentation_albums"))
-//    implementation(project(":presentation_album"))
+    implementation(project(":presentation_common"))
+    implementation(project(":presentation_artists"))
+    implementation(project(":presentation_albums"))
+    implementation(project(":presentation_album_details"))
 
     implementation(Depends.kotlin)
     implementation(Depends.appcompat)
@@ -58,5 +58,5 @@ dependencies {
     testImplementation(Depends.junit)
 
     androidTestImplementation(Depends.testRunner)
-    androidTestImplementation(Depends.espressoCore)
+    androidTestImplementation(Depends.espresso)
 }
