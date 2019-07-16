@@ -73,8 +73,6 @@ class AlbumDataSourceImplTest {
         test.assertNoErrors()
         test.assertValueCount(25)
 
-        Assert.assertEquals(artist, test.values()[0].artist)
+        Assert.assertEquals("Originals", test.values()[0].title)
     }
-
-
 }

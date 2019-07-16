@@ -22,7 +22,7 @@ import io.reactivex.FlowableTransformer
 
 interface AlbumDataSource {
 
-    fun fetchAlbum(): FlowableTransformer<Pair<String, Artist>, Album>
+    fun fetchAlbum(): FlowableTransformer<String, Album>
 
     fun fetchAlbums(): FlowableTransformer<Artist, Album>
 

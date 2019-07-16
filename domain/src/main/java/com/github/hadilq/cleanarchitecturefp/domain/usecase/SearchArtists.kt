@@ -25,5 +25,5 @@ interface SearchArtists {
 
     fun findArtists(): FlowableTransformer<String, Pair<Flowable<Artist>, Maybe<Throwable>>>
 
-    fun findNestArtists(): FlowableTransformer<Unit, Pair<Flowable<Artist>, Maybe<Throwable>>>
+    fun findNextArtists(): FlowableTransformer<Unit, Pair<Flowable<Artist>, Maybe<Throwable>>>
 }

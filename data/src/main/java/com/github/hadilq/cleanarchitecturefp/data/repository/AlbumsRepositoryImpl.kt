@@ -23,6 +23,7 @@ import com.github.hadilq.cleanarchitecturefp.domain.repository.AlbumsRepository
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.Maybe
+import io.reactivex.Single
 import io.reactivex.processors.PublishProcessor
 
 class AlbumsRepositoryImpl(
@@ -31,8 +32,12 @@ class AlbumsRepositoryImpl(
 
     private val networkErrorsProcessor = PublishProcessor.create<Throwable>()
 
-    override fun fetchAlbum(): FlowableTransformer<Pair<String, Artist>, Pair<Flowable<Album>, Maybe<Throwable>>> =
-        fetchWith(dataSource.fetchAlbum())
+    override fun fetchAlbum(): FlowableTransformer<String, Pair<Single<Album>, Maybe<Throwable>>> =
+        FlowableTransformer {
+            Flowable.just(it.compose(dataSource.fetchAlbum()))
+                .map { f -> Pair(f.firstOrError(), networkErrorsProcessor.firstElement()) }
+                .doOnError { e -> networkErrorsProcessor.offer(e) }
+        }
 
     override fun fetchAlbums(): FlowableTransformer<Artist, Pair<Flowable<Album>, Maybe<Throwable>>> =
         fetchWith(dataSource.fetchAlbums())

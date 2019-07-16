@@ -31,12 +31,13 @@ class SearchArtistsImpl(
 ) : SearchArtists {
 
     override fun findArtists(): FlowableTransformer<String, Pair<Flowable<Artist>, Maybe<Throwable>>> =
-        FlowableTransformer { query ->
-            query.compose(SwitchFlowableTransformer(repository.fetchArtists())).compose(schedulers)
-        }
+        fetch(repository.fetchArtists())
 
-    override fun findNestArtists(): FlowableTransformer<Unit, Pair<Flowable<Artist>, Maybe<Throwable>>> =
-        FlowableTransformer { query ->
-            query.compose(SwitchFlowableTransformer(repository.fetchNextArtists())).compose(schedulers)
+    override fun findNextArtists(): FlowableTransformer<Unit, Pair<Flowable<Artist>, Maybe<Throwable>>> =
+        fetch(repository.fetchNextArtists())
+
+    private fun <T> fetch(f: FlowableTransformer<T, Pair<Flowable<Artist>, Maybe<Throwable>>>): FlowableTransformer<T, Pair<Flowable<Artist>, Maybe<Throwable>>> =
+        FlowableTransformer { u ->
+            u.compose(SwitchFlowableTransformer(f)).compose(schedulers)
         }
 }

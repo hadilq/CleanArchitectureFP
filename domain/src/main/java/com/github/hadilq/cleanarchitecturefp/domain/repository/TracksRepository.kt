@@ -16,7 +16,6 @@
  * */
 package com.github.hadilq.cleanarchitecturefp.domain.repository
 
-import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
@@ -24,5 +23,5 @@ import io.reactivex.Maybe
 
 interface TracksRepository {
 
-    fun fetchTracks(): FlowableTransformer<Pair<String, Album>, Pair<Flowable<Track>, Maybe<Throwable>>>
+    fun fetchTrack(): FlowableTransformer<String, Pair<Flowable<Track>, Maybe<Throwable>>>
 }

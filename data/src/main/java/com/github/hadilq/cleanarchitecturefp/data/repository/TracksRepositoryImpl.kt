@@ -17,7 +17,6 @@
 package com.github.hadilq.cleanarchitecturefp.data.repository
 
 import com.github.hadilq.cleanarchitecturefp.data.datasource.TrackDataSource
-import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
 import com.github.hadilq.cleanarchitecturefp.domain.repository.TracksRepository
 import io.reactivex.Flowable
@@ -27,11 +26,11 @@ import io.reactivex.processors.PublishProcessor
 
 class TracksRepositoryImpl(
     private val dataSource: TrackDataSource
-) :TracksRepository {
+) : TracksRepository {
 
     private val networkErrorsProcessor = PublishProcessor.create<Throwable>()
 
-    override fun fetchTracks(): FlowableTransformer<Pair<String, Album>, Pair<Flowable<Track>, Maybe<Throwable>>> =
+    override fun fetchTrack(): FlowableTransformer<String, Pair<Flowable<Track>, Maybe<Throwable>>> =
         FlowableTransformer {
             Flowable.just(it.compose(dataSource.fetchTrack()))
                 .map { f -> Pair(f, networkErrorsProcessor.firstElement()) }

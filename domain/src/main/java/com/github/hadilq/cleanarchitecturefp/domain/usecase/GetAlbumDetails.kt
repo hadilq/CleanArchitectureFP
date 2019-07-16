@@ -14,25 +14,18 @@
  * limitations under the License.
  *
  * */
-package com.github.hadilq.cleanarchitecturefp.domain.usecase.impl
+package com.github.hadilq.cleanarchitecturefp.domain.usecase
 
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
-import com.github.hadilq.cleanarchitecturefp.domain.repository.TracksRepository
-import com.github.hadilq.cleanarchitecturefp.domain.usecase.GetTracks
-import com.github.hadilq.cleanarchitecturefp.domain.util.SchedulerHandler
-import com.github.hadilq.cleanarchitecturefp.domain.util.SwitchFlowableTransformer
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.Maybe
+import io.reactivex.Single
 
-class GetTracksImpl(
-    private val repository: TracksRepository,
-    private val schedulers: SchedulerHandler<Pair<String, Album>>
-) : GetTracks {
+interface GetAlbumDetails {
 
-    override fun tracks(): FlowableTransformer<Pair<String, Album>, Pair<Flowable<Track>, Maybe<Throwable>>> =
-        FlowableTransformer { query ->
-            query.compose(schedulers).compose(SwitchFlowableTransformer(repository.fetchTracks()))
-        }
+    fun details(): FlowableTransformer<Album, Pair<Pair<Single<Album>, Flowable<Track>>, Maybe<Throwable>>>
+
+    fun track(): FlowableTransformer<String, Pair<Flowable<Track>, Maybe<Throwable>>>
 }

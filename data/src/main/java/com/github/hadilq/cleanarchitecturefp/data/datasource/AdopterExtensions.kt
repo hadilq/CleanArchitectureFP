@@ -23,7 +23,7 @@ import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
 
-fun ArtistDto.map() = Artist(
+fun ArtistDto.map(): Artist = Artist(
     id = id,
     name = name,
     picture = picture,
@@ -33,7 +33,7 @@ fun ArtistDto.map() = Artist(
     pictureXl = pictureXl
 )
 
-fun AlbumDto.map(artist: Artist) = Album(
+fun AlbumDto.map(): Album = Album(
     id = id,
     title = title,
     cover = cover,
@@ -41,14 +41,15 @@ fun AlbumDto.map(artist: Artist) = Album(
     coverMedium = coverMedium,
     coverBig = coverBig,
     coverXl = coverXl,
-    artist = artist
+    artist = artist?.map(),
+    tracks = tracks?.data?.map(TrackDto::map)
 )
 
-fun TrackDto.map(album: Album) = Track(
+fun TrackDto.map(): Track = Track(
     id = id,
     title = title,
     titleShort = titleShort,
-    album = album,
-    artist = album.artist,
+    album = album.map(),
+    artist = artist.map(),
     contributors = contributors.map { it.map() }
 )

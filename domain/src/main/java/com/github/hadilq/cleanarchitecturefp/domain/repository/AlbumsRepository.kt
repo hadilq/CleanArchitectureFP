@@ -21,10 +21,11 @@ import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.Maybe
+import io.reactivex.Single
 
 interface AlbumsRepository {
 
-    fun fetchAlbum(): FlowableTransformer<Pair<String, Artist>, Pair<Flowable<Album>, Maybe<Throwable>>>
+    fun fetchAlbum(): FlowableTransformer<String, Pair<Single<Album>, Maybe<Throwable>>>
 
     fun fetchAlbums(): FlowableTransformer<Artist, Pair<Flowable<Album>, Maybe<Throwable>>>
 

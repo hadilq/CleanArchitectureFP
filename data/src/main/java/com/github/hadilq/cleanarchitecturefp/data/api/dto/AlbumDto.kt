@@ -16,7 +16,6 @@
  * */
 package com.github.hadilq.cleanarchitecturefp.data.api.dto
 
-import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import com.google.gson.annotations.SerializedName
 
 data class AlbumDto(
@@ -27,6 +26,6 @@ data class AlbumDto(
     @SerializedName("cover_medium") val coverMedium: String,
     @SerializedName("cover_big") val coverBig: String,
     @SerializedName("cover_xl") val coverXl: String,
-    @SerializedName("artist") val artist: Artist,
-    @SerializedName("tracks") val tracks: EnvelopDto<TrackDto>
+    @SerializedName("artist") val artist: ArtistDto?,
+    @SerializedName("track") val tracks: EnvelopDto<TrackDto>?
 )

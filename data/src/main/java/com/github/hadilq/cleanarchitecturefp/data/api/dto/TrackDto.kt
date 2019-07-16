@@ -16,15 +16,13 @@
  * */
 package com.github.hadilq.cleanarchitecturefp.data.api.dto
 
-import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
-import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import com.google.gson.annotations.SerializedName
 
 data class TrackDto(
     @SerializedName("id") val id: String,
     @SerializedName("title") val title: String,
     @SerializedName("title_short") val titleShort: String,
-    @SerializedName("album") val album: Album,
-    @SerializedName("artist") val artist: Artist,
+    @SerializedName("album") val album: AlbumDto,
+    @SerializedName("artist") val artist: ArtistDto,
     @SerializedName("contributors") val contributors: Collection<ArtistDto>
 )

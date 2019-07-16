@@ -16,11 +16,10 @@
  * */
 package com.github.hadilq.cleanarchitecturefp.data.datasource
 
-import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
 import io.reactivex.FlowableTransformer
 
 interface TrackDataSource {
 
-    fun fetchTrack(): FlowableTransformer<Pair<String, Album>, Track>
+    fun fetchTrack(): FlowableTransformer<String, Track>
 }

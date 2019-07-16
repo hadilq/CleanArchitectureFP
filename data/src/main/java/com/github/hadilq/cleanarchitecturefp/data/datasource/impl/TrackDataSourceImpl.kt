@@ -19,7 +19,6 @@ package com.github.hadilq.cleanarchitecturefp.data.datasource.impl
 import com.github.hadilq.cleanarchitecturefp.data.api.Api
 import com.github.hadilq.cleanarchitecturefp.data.datasource.TrackDataSource
 import com.github.hadilq.cleanarchitecturefp.data.datasource.map
-import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
 import io.reactivex.FlowableTransformer
 
@@ -27,12 +26,12 @@ class TrackDataSourceImpl(
     private val api: Api
 ) : TrackDataSource {
 
-    override fun fetchTrack(): FlowableTransformer<Pair<String, Album>, Track> =
+    override fun fetchTrack(): FlowableTransformer<String, Track> =
         FlowableTransformer {
-            it.flatMap { p ->
-                api.track(p.first)
+            it.flatMap { id ->
+                api.track(id)
                     .toFlowable()
-                    .map { ad -> ad.map(p.second) }
+                    .map { ad -> ad.map() }
             }
         }
 }

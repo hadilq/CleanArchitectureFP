@@ -65,7 +65,7 @@ class TrackDataSourceImplTest {
         `when`(api.track("T")).doReturn(Single.just(dto))
         val dataSource = TrackDataSourceImpl(api)
 
-        val test = Flowable.just(Pair("T", Album("", "", "", "", "", "", "", Artist("", "", "", "", "", "", ""))))
+        val test = Flowable.just("T")
             .compose(dataSource.fetchTrack()).test()
 
         test.assertComplete()

@@ -19,8 +19,9 @@ package com.github.hadilq.cleanarchitecturefp.domain.usecase.impl
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
+import com.github.hadilq.cleanarchitecturefp.domain.repository.AlbumsRepository
 import com.github.hadilq.cleanarchitecturefp.domain.repository.TracksRepository
-import com.github.hadilq.cleanarchitecturefp.domain.usecase.GetTracks
+import com.github.hadilq.cleanarchitecturefp.domain.usecase.GetAlbumDetails
 import com.github.hadilq.cleanarchitecturefp.domain.util.SchedulerHandler
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
@@ -37,20 +38,26 @@ import org.junit.Test
 import org.mockito.Mockito.`when`
 import org.reactivestreams.Publisher
 
-class GetTrackImplTest {
+class GetAlbumDetailsImplTest {
 
-    private lateinit var repository: TracksRepository
-    private lateinit var usecase: GetTracks
+    private lateinit var albumsRepository: AlbumsRepository
+    private lateinit var trackRepository: TracksRepository
+    private lateinit var usecase: GetAlbumDetails
 
     @Before
     fun setup() {
-        repository = mock()
-        usecase = GetTracksImpl(repository, object : SchedulerHandler<Pair<String, Album>> {
-
-            override fun apply(upstream: Flowable<Pair<String, Album>>): Publisher<Pair<String, Album>> {
-                return upstream
-            }
-        })
+        albumsRepository = mock()
+        trackRepository = mock()
+        usecase =
+            GetAlbumDetailsImpl(albumsRepository, trackRepository, object : SchedulerHandler<String> {
+                override fun apply(upstream: Flowable<String>): Publisher<String> {
+                    return upstream
+                }
+            }, object : SchedulerHandler<Album> {
+                override fun apply(upstream: Flowable<Album>): Publisher<Album> {
+                    return upstream
+                }
+            })
 
         RxJavaPlugins.reset()
         RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
@@ -67,7 +74,7 @@ class GetTrackImplTest {
         val artist = Artist("", "Test", "", "", "", "", "")
         val album = Album("", "Test", "", "", "", "", "", artist)
         val track = Track("", "Test", "", album, artist, emptyList())
-        `when`(repository.fetchTracks()).doReturn(FlowableTransformer {
+        `when`(trackRepository.fetchTrack()).doReturn(FlowableTransformer {
             Flowable.just(
                 Pair(
                     Flowable.just(track),
@@ -77,10 +84,10 @@ class GetTrackImplTest {
         })
 
         //When
-        Flowable.just(Pair("", album)).compose(usecase.tracks()).test()
+        Flowable.just("").compose(usecase.track()).test()
 
         // Then
-        verify(repository).fetchTracks()
+        verify(trackRepository).fetchTrack()
     }
 
     @Test
@@ -90,7 +97,7 @@ class GetTrackImplTest {
         val album = Album("", "Test", "", "", "", "", "", artist)
         val track = Track("", "Test", "", album, artist, emptyList())
         val flowableFactory: () -> Flowable<Pair<Flowable<Track>, Maybe<Throwable>>> = mock()
-        `when`(repository.fetchTracks()).doReturn(
+        `when`(trackRepository.fetchTrack()).doReturn(
             FlowableTransformer {
                 flowableFactory()
             }
@@ -98,10 +105,10 @@ class GetTrackImplTest {
         `when`(flowableFactory.invoke()).doReturn(Flowable.just(Pair(Flowable.just(track), Maybe.empty())))
 
         //When
-        Flowable.fromArray(Pair("", album), Pair("", album)).compose(usecase.tracks()).test()
+        Flowable.fromArray("", "").compose(usecase.track()).test()
 
         // Then
-        verify(repository).fetchTracks()
+        verify(trackRepository).fetchTrack()
         verify(flowableFactory, times(2)).invoke()
     }
 }

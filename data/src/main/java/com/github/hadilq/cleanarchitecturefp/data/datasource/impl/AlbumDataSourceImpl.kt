@@ -33,12 +33,12 @@ class AlbumDataSourceImpl(
     private var artist: Artist? = null
     private var next: String? = null
 
-    override fun fetchAlbum(): FlowableTransformer<Pair<String, Artist>, Album> =
+    override fun fetchAlbum(): FlowableTransformer<String, Album> =
         FlowableTransformer {
-            it.flatMap { p ->
-                api.album(p.first)
+            it.flatMap { id ->
+                api.album(id)
                     .toFlowable()
-                    .map { ad -> ad.map(p.second) }
+                    .map { ad -> ad.map() }
             }
         }
 
@@ -79,6 +79,6 @@ class AlbumDataSourceImpl(
                 .flatMap { list ->
                     Flowable.fromIterable(list)
                 }
-                .map { ad -> ad.map(a) }
+                .map { ad -> ad.map() }
         }
 }
