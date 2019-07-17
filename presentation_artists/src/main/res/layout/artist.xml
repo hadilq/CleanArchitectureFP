@@ -28,6 +28,8 @@
             app:layout_constraintLeft_toRightOf="@+id/pictureView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:maxLines="1"
+            android:ellipsize="end"
             tools:ignore="RtlHardcoded"
             />
 </androidx.constraintlayout.widget.ConstraintLayout>

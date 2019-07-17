@@ -14,26 +14,35 @@ import kotlinx.android.synthetic.main.album.view.*
 class AlbumViewHolder(
     parent: ViewGroup,
     actionStream: (Observable<Action>) -> Unit,
-    private val picasso: Picasso
+    private val picasso: Picasso,
+    width: Int
 ) : RecyclerView.ViewHolder(parent.inflate(R.layout.album)) {
 
     private var album: Album? = null
 
     init {
+        itemView.albumLayout.layoutParams.width = width
+        itemView.albumLayout.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        itemView.albumLayout.layoutParams = itemView.albumLayout.layoutParams
+
+        itemView.coverView.layoutParams.width =
+            width - 3 * itemView.resources.getDimension(R.dimen.standard_half).toInt() / 4
+        itemView.coverView.layoutParams.height = itemView.coverView.layoutParams.width
+        itemView.coverView.layoutParams = itemView.coverView.layoutParams
+
         actionStream(
             RxView.clicks(itemView)
                 .filter { album != null }
                 .map { album?.let { a -> AlbumClickAction(a) } }
         )
-
     }
 
     fun bindTo(album: Album) {
+
         itemView.titleView.text = album.title
         album.artist?.let { a ->
             itemView.artistView.text = a.name
         }
         itemView.coverView.loadFromUrl(picasso, album.coverMedium)
-
     }
 }

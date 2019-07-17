@@ -1,6 +1,8 @@
 package com.github.hadilq.presentationalbums
 
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,16 +13,18 @@ import com.github.hadilq.presentationcommon.IntentFactory.AlbumCarrier.Companion
 import kotlinx.android.synthetic.main.albums_activity.*
 import javax.inject.Inject
 
+
 class AlbumsActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
-    lateinit var adapter: AlbumsAdapter
+    lateinit var adapterFactory: AlbumsAdapter.AlbumAdapterFactory
     @Inject
     lateinit var intentFactory: IntentFactory
 
     private lateinit var viewModel: AlbumsViewModel
+    private lateinit var adapter: AlbumsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +36,20 @@ class AlbumsActivity : BaseActivity() {
             openAlbumDetailsLiveEvent().observe(::onOpenAlbumDetails)
         }
 
+        setupBackButton()
         setupRecyclerView()
 
         viewModel.startLoading(intent.getStringExtra(IntentFactory.BundleKey.ALBUMS_ARTIST_ID.KEY))
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
 
     private fun albumsListArrived(albums: List<Album>) {
         adapter.newList(albums)
@@ -51,11 +65,20 @@ class AlbumsActivity : BaseActivity() {
         startActivity(intent)
     }
 
+    private fun setupBackButton() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
     private fun setupRecyclerView() {
-        albumsView.layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
-        albumsView.adapter = adapter
-        adapter.actionStream = {
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+        adapter = adapterFactory.get(displayMetrics.widthPixels / 2) {
             viewModel.recyclerViewActions(it)
         }
+        albumsView.layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+        albumsView.adapter = adapter
+        albumsView.addItemDecoration(SpacingItemDecoration(resources.getDimension(R.dimen.standard_half).toInt()))
     }
 }

@@ -13,8 +13,10 @@
             >
 
         <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:title="@string/albums"
                 app:layout_scrollFlags="scroll|snap|enterAlways"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -26,5 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layoutDirection="ltr"
             />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

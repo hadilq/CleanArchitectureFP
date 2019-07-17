@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">presentation-albums</string>
+    <string name="albums">Albums</string>
 </resources>

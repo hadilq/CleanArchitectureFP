@@ -58,6 +58,8 @@
                     android:layout_margin="@dimen/standard_half"
                     android:textAppearance="@style/Body2Dark"
                     android:textColor="@null"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/searchIcon"
