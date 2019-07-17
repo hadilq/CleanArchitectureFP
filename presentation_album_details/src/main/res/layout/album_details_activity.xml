@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/albumDetailsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,6 +20,7 @@
                 app:layout_scrollFlags="scroll|snap|enterAlways"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                tools:ignore="ContentDescription"
                 />
     </com.google.android.material.appbar.AppBarLayout>
 

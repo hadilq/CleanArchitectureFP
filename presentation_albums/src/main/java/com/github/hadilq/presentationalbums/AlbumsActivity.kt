@@ -11,7 +11,7 @@ import com.github.hadilq.presentationcommon.IntentFactory.AlbumCarrier.Companion
 import kotlinx.android.synthetic.main.albums_activity.*
 import javax.inject.Inject
 
-class ArtistsActivity : BaseActivity() {
+class AlbumsActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
