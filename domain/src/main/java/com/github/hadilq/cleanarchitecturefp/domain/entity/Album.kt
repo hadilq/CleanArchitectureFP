@@ -24,6 +24,6 @@ data class Album(
     val coverMedium: String,
     val coverBig: String,
     val coverXl: String,
-    val artist: Artist?,
+    val artist: Artist? = null,
     val tracks: Collection<Track>? = null
 )

@@ -20,11 +20,11 @@ class AlbumsViewModel @Inject constructor(
 
     private val albumsLiveData = BehaviorProcessor.create<List<Album>>()
     private val networkErrorLiveData = BehaviorProcessor.create<Throwable>()
-    private val openAlbumDetailsLiveEvent = PublishProcessor.create<String>()
+    private val openAlbumDetailsLiveEvent = PublishProcessor.create<Album>()
 
     fun albumsLiveData(): Flowable<List<Album>> = albumsLiveData.hide()
     fun networkErrorLiveData(): Flowable<Throwable> = networkErrorLiveData.hide()
-    fun openAlbumDetailsLiveEvent(): Flowable<String> = openAlbumDetailsLiveEvent.hide()
+    fun openAlbumDetailsLiveEvent(): Flowable<Album> = openAlbumDetailsLiveEvent.hide()
 
     fun startLoading(artistId: String) {
         Flowable.just(artistId)
@@ -48,17 +48,16 @@ class AlbumsViewModel @Inject constructor(
             .toFlowable(BackpressureStrategy.DROP)
             .throttleFirst(1, TimeUnit.SECONDS)
             .filterTo(AlbumClickAction::class.java)
-            .map { it.album.id }
+            .map { it.album }
             .map { openAlbumDetailsLiveEvent.offer(it) }
             .subscribe()
             .track()
     }
 
-
     private fun keepNewData(pair: Pair<Flowable<Album>, Maybe<Throwable>>): Flowable<Unit> =
         Flowable.merge(
-            pair.first.toList()
-                .toFlowable().map { albumsLiveData.offer(it) }.map { Unit },
+            Flowable.fromIterable(albumsLiveData.value).concatWith(pair.first)
+                .toList().toFlowable().map { albumsLiveData.offer(it) }.map { Unit },
             pair.second
                 .toFlowable().map { networkErrorLiveData.offer(it) }.map { Unit }
         )

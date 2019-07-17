@@ -31,21 +31,20 @@ import io.reactivex.Single
 class GetAlbumDetailsImpl(
     private val albumsRepository: AlbumsRepository,
     private val tracksRepository: TracksRepository,
-    private val stringSchedulers: SchedulerHandler<String>,
-    private val albumSchedulers: SchedulerHandler<Album>
+    private val schedulers: SchedulerHandler<String>
 ) : GetAlbumDetails {
 
-    override fun details(): FlowableTransformer<Album, Pair<Pair<Single<Album>, Flowable<Track>>, Maybe<Throwable>>> =
+    override fun details(): FlowableTransformer<String, Triple<Single<Album>, Flowable<Track>, Maybe<Throwable>>> =
         FlowableTransformer { query ->
             query
-                .compose(albumSchedulers)
-                .flatMap { a ->
-                    Flowable.just(a.id)
+                .compose(schedulers)
+                .flatMap { albumId ->
+                    Flowable.just(albumId)
                         .compose(albumsRepository.fetchAlbum())
                         .map {
                             val album = it.first.blockingGet()
                             val pair = completeLoadingTracks(album)
-                            Pair(Pair(Single.just(album), pair.first), it.second.ambWith(pair.second))
+                            Triple(Single.just(album), pair.first, it.second.ambWith(pair.second))
                         }
                 }
         }
@@ -55,8 +54,8 @@ class GetAlbumDetailsImpl(
             .map { it.id }
             .compose(track())
             .toList()
-            .map { pair ->
-                val iterable = Flowable.fromIterable(pair).share()
+            .map { list ->
+                val iterable = Flowable.fromIterable(list).share()
 
                 Pair(
                     iterable.flatMap { it.first },
@@ -66,6 +65,6 @@ class GetAlbumDetailsImpl(
 
     override fun track(): FlowableTransformer<String, Pair<Flowable<Track>, Maybe<Throwable>>> =
         FlowableTransformer { query ->
-            query.compose(stringSchedulers).compose(SwitchFlowableTransformer(tracksRepository.fetchTrack()))
+            query.compose(schedulers).compose(SwitchFlowableTransformer(tracksRepository.fetchTrack()))
         }
 }

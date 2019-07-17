@@ -59,8 +59,8 @@ class ArtistsViewModel @Inject constructor(
 
     private fun keepNewData(pair: Pair<Flowable<Artist>, Maybe<Throwable>>): Flowable<Unit> =
         Flowable.merge(
-            pair.first.toList()
-                .toFlowable().map { artistsLiveData.offer(it) }.map { Unit },
+            Flowable.fromIterable(artistsLiveData.value).concatWith(pair.first)
+                .toList().toFlowable().map { artistsLiveData.offer(it) }.map { Unit },
             pair.second
                 .toFlowable().map { networkErrorLiveData.offer(it) }.map { Unit }
         )

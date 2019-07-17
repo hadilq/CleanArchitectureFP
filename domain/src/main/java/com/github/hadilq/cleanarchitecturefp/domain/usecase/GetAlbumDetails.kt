@@ -25,7 +25,7 @@ import io.reactivex.Single
 
 interface GetAlbumDetails {
 
-    fun details(): FlowableTransformer<Album, Pair<Pair<Single<Album>, Flowable<Track>>, Maybe<Throwable>>>
+    fun details(): FlowableTransformer<String, Triple<Single<Album>, Flowable<Track>, Maybe<Throwable>>>
 
     fun track(): FlowableTransformer<String, Pair<Flowable<Track>, Maybe<Throwable>>>
 }

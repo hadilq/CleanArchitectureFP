@@ -53,10 +53,6 @@ class GetAlbumDetailsImplTest {
                 override fun apply(upstream: Flowable<String>): Publisher<String> {
                     return upstream
                 }
-            }, object : SchedulerHandler<Album> {
-                override fun apply(upstream: Flowable<Album>): Publisher<Album> {
-                    return upstream
-                }
             })
 
         RxJavaPlugins.reset()
@@ -69,7 +65,7 @@ class GetAlbumDetailsImplTest {
     }
 
     @Test
-    fun findArtists() {
+    fun fetchTrack() {
         //Given
         val artist = Artist("", "Test", "", "", "", "", "")
         val album = Album("", "Test", "", "", "", "", "", artist)
@@ -91,7 +87,7 @@ class GetAlbumDetailsImplTest {
     }
 
     @Test
-    fun findArtistsDoubleCall() {
+    fun fetchTrackDoubleCall() {
         //Given
         val artist = Artist("", "Test", "", "", "", "", "")
         val album = Album("", "Test", "", "", "", "", "", artist)

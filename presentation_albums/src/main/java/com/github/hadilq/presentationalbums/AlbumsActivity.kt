@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.presentationcommon.BaseActivity
 import com.github.hadilq.presentationcommon.IntentFactory
+import com.github.hadilq.presentationcommon.IntentFactory.AlbumCarrier.Companion.fromAlbum
 import kotlinx.android.synthetic.main.albums_activity.*
 import javax.inject.Inject
 
@@ -44,9 +45,9 @@ class ArtistsActivity : BaseActivity() {
         showFailure(albumsLayout, R.string.network_error, viewModel::retry)
     }
 
-    private fun onOpenAlbumDetails(albumId: String) {
+    private fun onOpenAlbumDetails(album: Album) {
         val intent = intentFactory.create(IntentFactory.Page.ALBUM_DETAILS)
-        intent.putExtra(IntentFactory.BundleKey.ALBUMS_ARTIST_ID.KEY, albumId)
+        intent.putExtra(IntentFactory.BundleKey.ALBUM_DETAILS_ALBUM.KEY, album.fromAlbum())
         startActivity(intent)
     }
 
