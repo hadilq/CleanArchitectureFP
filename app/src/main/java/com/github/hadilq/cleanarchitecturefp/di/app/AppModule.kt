@@ -19,6 +19,8 @@ package com.github.hadilq.cleanarchitecturefp.di.app
 import android.app.Application
 import android.content.Context
 import com.github.hadilq.cleanarchitecturefp.App
+import com.github.hadilq.cleanarchitecturefp.IntentFactoryImpl
+import com.github.hadilq.presentationcommon.IntentFactory
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -33,4 +35,8 @@ class AppModule {
     @Singleton
     @Provides
     fun provideAppContext(app: App): Context = app.applicationContext
+
+    @Singleton
+    @Provides
+    fun provideIntentFactory(intentFactoryImpl: IntentFactoryImpl): IntentFactory = intentFactoryImpl
 }

@@ -6,7 +6,7 @@ object Depends {
     const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
     const val materialDesign = "com.google.android.material:material:${Versions.materialDesign}"
     const val rxJava = "io.reactivex.rxjava2:rxjava:2.2.7"
-    const val rxAndroid = "io.reactivex:rxandroid:1.2.1"
+    const val rxAndroid = "io.reactivex.rxjava2:rxandroid:2.1.1"
     const val rxBinding = "com.jakewharton.rxbinding2:rxbinding:${Versions.rxBinding}"
     const val rxBindingAppCompat = "com.jakewharton.rxbinding2:rxbinding-appcompat:${Versions.rxBinding}"
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"

@@ -39,7 +39,12 @@ class ArtistsRepositoryImpl(
     private fun <T> fetchWith(transformer: FlowableTransformer<T, Artist>): FlowableTransformer<T, Pair<Flowable<Artist>, Maybe<Throwable>>> =
         FlowableTransformer {
             Flowable.just(it.compose(transformer))
-                .map { f -> Pair(f, networkErrorsProcessor.firstElement()) }
-                .doOnError { e -> networkErrorsProcessor.offer(e) }
+                .map { f ->
+                    Pair(
+                        f.onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() },
+                        networkErrorsProcessor.firstElement()
+                    )
+                }
+                .onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() }
         }
 }

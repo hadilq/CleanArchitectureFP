@@ -18,7 +18,6 @@ package com.github.hadilq.cleanarchitecturefp.data.repository
 
 import com.github.hadilq.cleanarchitecturefp.data.datasource.AlbumDataSource
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
-import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import com.github.hadilq.cleanarchitecturefp.domain.repository.AlbumsRepository
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
@@ -35,8 +34,13 @@ class AlbumsRepositoryImpl(
     override fun fetchAlbum(): FlowableTransformer<String, Pair<Single<Album>, Maybe<Throwable>>> =
         FlowableTransformer {
             Flowable.just(it.compose(dataSource.fetchAlbum()))
-                .map { f -> Pair(f.firstOrError(), networkErrorsProcessor.firstElement()) }
-                .doOnError { e -> networkErrorsProcessor.offer(e) }
+                .map { f ->
+                    Pair(
+                        f.onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() }.firstOrError(),
+                        networkErrorsProcessor.firstElement()
+                    )
+                }
+                .onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() }
         }
 
     override fun fetchAlbums(): FlowableTransformer<String, Pair<Flowable<Album>, Maybe<Throwable>>> =
@@ -48,7 +52,12 @@ class AlbumsRepositoryImpl(
     private fun <T> fetchWith(transformer: FlowableTransformer<T, Album>): FlowableTransformer<T, Pair<Flowable<Album>, Maybe<Throwable>>> =
         FlowableTransformer {
             Flowable.just(it.compose(transformer))
-                .map { f -> Pair(f, networkErrorsProcessor.firstElement()) }
-                .doOnError { e -> networkErrorsProcessor.offer(e) }
+                .map { f ->
+                    Pair(
+                        f.onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() },
+                        networkErrorsProcessor.firstElement()
+                    )
+                }
+                .onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() }
         }
 }

@@ -22,7 +22,6 @@ import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
 import com.github.hadilq.cleanarchitecturefp.domain.repository.AlbumsRepository
 import com.github.hadilq.cleanarchitecturefp.domain.repository.TracksRepository
 import com.github.hadilq.cleanarchitecturefp.domain.usecase.GetAlbumDetails
-import com.github.hadilq.cleanarchitecturefp.domain.util.SchedulerHandler
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
@@ -36,7 +35,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
-import org.reactivestreams.Publisher
 
 class GetAlbumDetailsImplTest {
 
@@ -49,11 +47,7 @@ class GetAlbumDetailsImplTest {
         albumsRepository = mock()
         trackRepository = mock()
         usecase =
-            GetAlbumDetailsImpl(albumsRepository, trackRepository, object : SchedulerHandler<String> {
-                override fun apply(upstream: Flowable<String>): Publisher<String> {
-                    return upstream
-                }
-            })
+            GetAlbumDetailsImpl(albumsRepository, trackRepository)
 
         RxJavaPlugins.reset()
         RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }

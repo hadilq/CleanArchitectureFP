@@ -14,8 +14,15 @@
  * limitations under the License.
  *
  * */
-package com.github.hadilq.cleanarchitecturefp.domain.util
+package com.github.hadilq.cleanarchitecturefp.di.feature.albums
 
-import io.reactivex.FlowableTransformer
+import com.github.hadilq.presentationalbums.AlbumsActivity
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
-interface SchedulerHandler<T> : FlowableTransformer<T, T>
+@Module
+abstract class AlbumsActivityModule {
+
+    @ContributesAndroidInjector(modules = [])
+    internal abstract fun get(): AlbumsActivity
+}

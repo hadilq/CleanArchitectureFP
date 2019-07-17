@@ -7,6 +7,7 @@ import com.github.hadilq.presentationcommon.BaseViewModel
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
@@ -15,12 +16,17 @@ class AlbumDetailsViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val albumDetailsLiveData = BehaviorProcessor.create<Album>()
-    private val tracksLiveData = BehaviorProcessor.create<List<Track>>()
+    private val tracksLiveData by lazy {
+        val processor = BehaviorProcessor.create<List<Track>>()
+        processor.offer(listOf())
+        processor
+    }
     private val networkErrorLiveData = BehaviorProcessor.create<Throwable>()
 
-    fun albumDetailsLiveData(): Flowable<Album> = albumDetailsLiveData.hide()
-    fun tracksLiveData(): Flowable<List<Track>> = tracksLiveData.hide()
-    fun networkErrorLiveData(): Flowable<Throwable> = networkErrorLiveData.hide()
+    fun albumDetailsLiveData(): Flowable<Album> = albumDetailsLiveData.hide().observeOn(AndroidSchedulers.mainThread())
+    fun tracksLiveData(): Flowable<List<Track>> = tracksLiveData.hide().observeOn(AndroidSchedulers.mainThread())
+    fun networkErrorLiveData(): Flowable<Throwable> =
+        networkErrorLiveData.hide().observeOn(AndroidSchedulers.mainThread())
 
     private var albumId: String? = null
 

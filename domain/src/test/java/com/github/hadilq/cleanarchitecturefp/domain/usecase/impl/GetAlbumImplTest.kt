@@ -20,7 +20,6 @@ import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import com.github.hadilq.cleanarchitecturefp.domain.repository.AlbumsRepository
 import com.github.hadilq.cleanarchitecturefp.domain.usecase.GetAlbums
-import com.github.hadilq.cleanarchitecturefp.domain.util.SchedulerHandler
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
@@ -34,7 +33,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
-import org.reactivestreams.Publisher
 
 class GetAlbumImplTest {
 
@@ -44,12 +42,7 @@ class GetAlbumImplTest {
     @Before
     fun setup() {
         repository = mock()
-        usecase = GetAlbumsImpl(repository, object : SchedulerHandler<Pair<Flowable<Album>, Maybe<Throwable>>> {
-
-            override fun apply(upstream: Flowable<Pair<Flowable<Album>, Maybe<Throwable>>>): Publisher<Pair<Flowable<Album>, Maybe<Throwable>>> {
-                return upstream
-            }
-        })
+        usecase = GetAlbumsImpl(repository)
 
         RxJavaPlugins.reset()
         RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }

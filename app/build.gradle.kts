@@ -51,7 +51,6 @@ dependencies {
     implementation(Depends.dagger)
     implementation(Depends.daggerAndroid)
     implementation(Depends.rxJava)
-    implementation(Depends.rxAndroid)
     implementation(Depends.retrofit)
     implementation(Depends.retrofitRxJava2Adapter)
     implementation(Depends.retrofitGsonConverter)

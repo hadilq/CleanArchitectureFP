@@ -19,7 +19,6 @@ package com.github.hadilq.cleanarchitecturefp.domain.usecase.impl
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import com.github.hadilq.cleanarchitecturefp.domain.repository.ArtistsRepository
 import com.github.hadilq.cleanarchitecturefp.domain.usecase.SearchArtists
-import com.github.hadilq.cleanarchitecturefp.domain.util.SchedulerHandler
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
@@ -33,7 +32,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
-import org.reactivestreams.Publisher
 
 class SearchArtistsImplTest {
 
@@ -43,12 +41,7 @@ class SearchArtistsImplTest {
     @Before
     fun setup() {
         repository = mock()
-        usecase = SearchArtistsImpl(repository, object : SchedulerHandler<Pair<Flowable<Artist>, Maybe<Throwable>>> {
-
-            override fun apply(upstream: Flowable<Pair<Flowable<Artist>, Maybe<Throwable>>>): Publisher<Pair<Flowable<Artist>, Maybe<Throwable>>> {
-                return upstream
-            }
-        })
+        usecase = SearchArtistsImpl(repository)
 
         RxJavaPlugins.reset()
         RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }

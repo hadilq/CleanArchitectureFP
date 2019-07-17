@@ -33,6 +33,7 @@ dependencies {
     implementation Depends.picasso
     implementation Depends.rxBinding
     implementation Depends.rxJava
+    implementation Depends.rxAndroid
     implementation Depends.dagger
     implementation Depends.daggerAndroid
     implementation Depends.annotations

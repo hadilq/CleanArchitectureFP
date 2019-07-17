@@ -32,6 +32,7 @@ dependencies {
     implementation Depends.constraintLayout
     implementation Depends.picasso
     implementation Depends.rxJava
+    implementation Depends.rxAndroid
     implementation Depends.dagger
     implementation Depends.daggerAndroid
     implementation Depends.annotations

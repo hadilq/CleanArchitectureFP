@@ -33,7 +33,7 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    private val baseUrl: String = "https://api.themoviedb.org/3/"
+    private val baseUrl: String = "https://api.deezer.com/"
 
     @Singleton
     @Provides

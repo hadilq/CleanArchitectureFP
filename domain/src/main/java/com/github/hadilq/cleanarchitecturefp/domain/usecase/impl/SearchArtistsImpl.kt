@@ -19,15 +19,14 @@ package com.github.hadilq.cleanarchitecturefp.domain.usecase.impl
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import com.github.hadilq.cleanarchitecturefp.domain.repository.ArtistsRepository
 import com.github.hadilq.cleanarchitecturefp.domain.usecase.SearchArtists
-import com.github.hadilq.cleanarchitecturefp.domain.util.SchedulerHandler
 import com.github.hadilq.cleanarchitecturefp.domain.util.SwitchFlowableTransformer
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.Maybe
+import io.reactivex.schedulers.Schedulers
 
 class SearchArtistsImpl(
-    private val repository: ArtistsRepository,
-    private val schedulers: SchedulerHandler<Pair<Flowable<Artist>, Maybe<Throwable>>>
+    private val repository: ArtistsRepository
 ) : SearchArtists {
 
     override fun findArtists(): FlowableTransformer<String, Pair<Flowable<Artist>, Maybe<Throwable>>> =
@@ -38,6 +37,6 @@ class SearchArtistsImpl(
 
     private fun <T> fetch(f: FlowableTransformer<T, Pair<Flowable<Artist>, Maybe<Throwable>>>): FlowableTransformer<T, Pair<Flowable<Artist>, Maybe<Throwable>>> =
         FlowableTransformer { u ->
-            u.compose(SwitchFlowableTransformer(f)).compose(schedulers)
+            u.compose(SwitchFlowableTransformer(f)).subscribeOn(Schedulers.io())
         }
 }

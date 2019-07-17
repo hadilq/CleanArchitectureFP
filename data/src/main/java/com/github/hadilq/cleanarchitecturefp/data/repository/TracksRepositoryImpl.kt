@@ -33,7 +33,12 @@ class TracksRepositoryImpl(
     override fun fetchTrack(): FlowableTransformer<String, Pair<Flowable<Track>, Maybe<Throwable>>> =
         FlowableTransformer {
             Flowable.just(it.compose(dataSource.fetchTrack()))
-                .map { f -> Pair(f, networkErrorsProcessor.firstElement()) }
-                .doOnError { e -> networkErrorsProcessor.offer(e) }
+                .map { f ->
+                    Pair(
+                        f.onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() },
+                        networkErrorsProcessor.firstElement()
+                    )
+                }
+                .onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() }
         }
 }

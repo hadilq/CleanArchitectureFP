@@ -6,8 +6,9 @@ import com.github.hadilq.presentationalbumdetails.recycler.data.BaseViewData
 import com.github.hadilq.presentationalbumdetails.recycler.holder.BaseViewHolder
 import com.github.hadilq.presentationalbumdetails.recycler.holder.TitleViewHolder
 import com.github.hadilq.presentationalbumdetails.recycler.holder.TrackViewHolder
+import javax.inject.Inject
 
-class AlbumDetailsAdapter : RecyclerView.Adapter<BaseViewHolder>() {
+class AlbumDetailsAdapter @Inject constructor() : RecyclerView.Adapter<BaseViewHolder>() {
 
     private val list = mutableListOf<BaseViewData>()
 

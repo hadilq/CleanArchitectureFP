@@ -21,23 +21,22 @@ import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
 import com.github.hadilq.cleanarchitecturefp.domain.repository.AlbumsRepository
 import com.github.hadilq.cleanarchitecturefp.domain.repository.TracksRepository
 import com.github.hadilq.cleanarchitecturefp.domain.usecase.GetAlbumDetails
-import com.github.hadilq.cleanarchitecturefp.domain.util.SchedulerHandler
 import com.github.hadilq.cleanarchitecturefp.domain.util.SwitchFlowableTransformer
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.Maybe
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 
 class GetAlbumDetailsImpl(
     private val albumsRepository: AlbumsRepository,
-    private val tracksRepository: TracksRepository,
-    private val schedulers: SchedulerHandler<String>
+    private val tracksRepository: TracksRepository
 ) : GetAlbumDetails {
 
     override fun details(): FlowableTransformer<String, Triple<Single<Album>, Flowable<Track>, Maybe<Throwable>>> =
         FlowableTransformer { query ->
             query
-                .compose(schedulers)
+                .subscribeOn(Schedulers.io())
                 .flatMap { albumId ->
                     Flowable.just(albumId)
                         .compose(albumsRepository.fetchAlbum())
@@ -65,6 +64,6 @@ class GetAlbumDetailsImpl(
 
     override fun track(): FlowableTransformer<String, Pair<Flowable<Track>, Maybe<Throwable>>> =
         FlowableTransformer { query ->
-            query.compose(schedulers).compose(SwitchFlowableTransformer(tracksRepository.fetchTrack()))
+            query.subscribeOn(Schedulers.io()).compose(SwitchFlowableTransformer(tracksRepository.fetchTrack()))
         }
 }

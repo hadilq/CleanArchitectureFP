@@ -17,9 +17,12 @@
 package com.github.hadilq.cleanarchitecturefp.di.app
 
 import com.github.hadilq.cleanarchitecturefp.App
-import com.github.hadilq.cleanarchitecturefp.di.AlbumDetailsModule
-import com.github.hadilq.cleanarchitecturefp.di.AlbumsModule
-import com.github.hadilq.cleanarchitecturefp.di.ArtistsModule
+import com.github.hadilq.cleanarchitecturefp.di.feature.albumdetails.AlbumDetailsActivityModule
+import com.github.hadilq.cleanarchitecturefp.di.feature.albumdetails.AlbumDetailsModule
+import com.github.hadilq.cleanarchitecturefp.di.feature.albums.AlbumsActivityModule
+import com.github.hadilq.cleanarchitecturefp.di.feature.albums.AlbumsModule
+import com.github.hadilq.cleanarchitecturefp.di.feature.artists.ArtistsActivityModule
+import com.github.hadilq.cleanarchitecturefp.di.feature.artists.ArtistsModule
 import com.github.hadilq.cleanarchitecturefp.di.viewmodel.ViewModelModule
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -34,8 +37,11 @@ import javax.inject.Singleton
         NetworkModule::class,
         ViewModelModule::class,
         ArtistsModule::class,
+        ArtistsActivityModule::class,
         AlbumsModule::class,
-        AlbumDetailsModule::class
+        AlbumsActivityModule::class,
+        AlbumDetailsModule::class,
+        AlbumDetailsActivityModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {
