@@ -7,10 +7,15 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
 import io.reactivex.Flowable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 abstract class BaseActivity : DaggerAppCompatActivity() {
 
+    private val disposables = CompositeDisposable()
     private var snackbar: Snackbar? = null
+
+    protected fun Disposable.track() = disposables.add(this)
 
     protected fun <T> Flowable<T>.observe(o: (T) -> Unit) {
         RxLifecycleHandler(this@BaseActivity, this, o)
@@ -32,5 +37,10 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
                 retry()
             }
         snackbar!!.show()
+    }
+
+    override fun onDestroy() {
+        disposables.clear()
+        super.onDestroy()
     }
 }

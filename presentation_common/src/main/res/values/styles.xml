@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme"
+           parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/bg</item>
+    </style>
+
+    <style name="Body1"
+           parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="Body2"
+           parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="Body2Dark"
+           parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textColor">@color/bg</item>
+    </style>
+
+</resources>

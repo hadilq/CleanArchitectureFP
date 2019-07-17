@@ -28,6 +28,6 @@ class ArtistViewHolder(
     fun bindTo(a: Artist) {
         artist = a
         itemView.nameView.text = a.name
-        itemView.pictureView.loadFromUrl(picasso, a.pictureSmall)
+        itemView.pictureView.loadFromUrl(picasso, a.pictureBig)
     }
 }

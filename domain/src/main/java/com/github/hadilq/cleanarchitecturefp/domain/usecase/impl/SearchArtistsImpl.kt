@@ -37,6 +37,6 @@ class SearchArtistsImpl(
 
     private fun <T> fetch(f: FlowableTransformer<T, Pair<Flowable<Artist>, Maybe<Throwable>>>): FlowableTransformer<T, Pair<Flowable<Artist>, Maybe<Throwable>>> =
         FlowableTransformer { u ->
-            u.compose(SwitchFlowableTransformer(f)).subscribeOn(Schedulers.io())
+            u.observeOn(Schedulers.io()).compose(SwitchFlowableTransformer(f))
         }
 }

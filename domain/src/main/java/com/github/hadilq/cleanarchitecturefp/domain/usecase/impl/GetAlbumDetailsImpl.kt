@@ -36,7 +36,7 @@ class GetAlbumDetailsImpl(
     override fun details(): FlowableTransformer<String, Triple<Single<Album>, Flowable<Track>, Maybe<Throwable>>> =
         FlowableTransformer { query ->
             query
-                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .flatMap { albumId ->
                     Flowable.just(albumId)
                         .compose(albumsRepository.fetchAlbum())
@@ -64,6 +64,6 @@ class GetAlbumDetailsImpl(
 
     override fun track(): FlowableTransformer<String, Pair<Flowable<Track>, Maybe<Throwable>>> =
         FlowableTransformer { query ->
-            query.subscribeOn(Schedulers.io()).compose(SwitchFlowableTransformer(tracksRepository.fetchTrack()))
+            query.observeOn(Schedulers.io()).compose(SwitchFlowableTransformer(tracksRepository.fetchTrack()))
         }
 }

@@ -45,6 +45,7 @@ class NetworkModule {
         val downloader = OkHttp3Downloader(context, Long.MAX_VALUE)
         val picasso = Picasso.Builder(context).downloader(downloader).build()
         Picasso.setSingletonInstance(picasso)
+        picasso.isLoggingEnabled = true
         return picasso
     }
 

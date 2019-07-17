@@ -31,11 +31,11 @@ class GetAlbumsImpl(
 
     override fun albums(): FlowableTransformer<String, Pair<Flowable<Album>, Maybe<Throwable>>> =
         FlowableTransformer { query ->
-            query.compose(SwitchFlowableTransformer(repository.fetchAlbums())).subscribeOn(Schedulers.io())
+            query.observeOn(Schedulers.io()).compose(SwitchFlowableTransformer(repository.fetchAlbums()))
         }
 
     override fun nextAlbums(): FlowableTransformer<Unit, Pair<Flowable<Album>, Maybe<Throwable>>> =
         FlowableTransformer { query ->
-            query.compose(SwitchFlowableTransformer(repository.fetchNextAlbums())).subscribeOn(Schedulers.io())
+            query.observeOn(Schedulers.io()).compose(SwitchFlowableTransformer(repository.fetchNextAlbums()))
         }
 }

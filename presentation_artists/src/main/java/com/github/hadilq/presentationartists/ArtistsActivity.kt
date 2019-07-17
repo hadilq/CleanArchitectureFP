@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import com.github.hadilq.presentationcommon.BaseActivity
 import com.github.hadilq.presentationcommon.IntentFactory
+import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import kotlinx.android.synthetic.main.artists_activity.*
 import javax.inject.Inject
@@ -59,5 +60,6 @@ class ArtistsActivity : BaseActivity() {
 
     private fun setupSearchView() {
         viewModel.searchViewActions(RxTextView.textChanges(searchView))
+        RxView.clicks(clearSearchView).map { searchView.text?.clear() }.subscribe().track()
     }
 }
