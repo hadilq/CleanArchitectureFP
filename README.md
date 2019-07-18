@@ -42,4 +42,4 @@ Google implementation of `LiveData` is not handling back pressure and is not a g
 
 Checks
 ---
-To run all the tests and checks please run `./gradlew clean check`.
+To run all the tests and checks please run `./gradlew clean check connectedCheck`.

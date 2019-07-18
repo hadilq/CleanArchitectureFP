@@ -38,6 +38,5 @@ class FileReader {
             }
         }
         return writer.toString()
-
     }
 }

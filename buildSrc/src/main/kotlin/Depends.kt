@@ -26,6 +26,7 @@ object Depends {
     const val dexmaker = "com.linkedin.dexmaker:dexmaker-mockito:2.19.0"
 
     const val testRunner = "androidx.test:runner:${Versions.testRunner}"
+    const val testRules = "androidx.test:rules:${Versions.testRules}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
 
 }

@@ -40,6 +40,7 @@ dependencies {
     implementation Depends.annotations
 
     testImplementation Depends.junit
+    testImplementation Depends.mockito
 
     androidTestImplementation Depends.testRunner
     androidTestImplementation Depends.espresso

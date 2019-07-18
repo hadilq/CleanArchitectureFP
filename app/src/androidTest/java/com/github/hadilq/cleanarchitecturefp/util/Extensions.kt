@@ -1,4 +1,4 @@
-package com.github.hadilq.cleanarchitecturefp.data.util
+package com.github.hadilq.cleanarchitecturefp.util
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

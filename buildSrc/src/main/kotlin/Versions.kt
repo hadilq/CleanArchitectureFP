@@ -26,6 +26,7 @@ object Versions {
 
     //Instrumentation Testing
     const val testRunner = "1.2.0"
+    const val testRules = "1.2.0"
     const val espresso = "3.2.0"
 
 }

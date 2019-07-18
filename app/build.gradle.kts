@@ -62,5 +62,8 @@ dependencies {
     testImplementation(Depends.junit)
 
     androidTestImplementation(Depends.testRunner)
+    androidTestImplementation(Depends.testRules)
     androidTestImplementation(Depends.espresso)
+    androidTestImplementation(Depends.mockito)
+    androidTestImplementation(Depends.dexmaker)
 }

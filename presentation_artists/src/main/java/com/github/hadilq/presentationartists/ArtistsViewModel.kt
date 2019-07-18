@@ -35,11 +35,7 @@ class ArtistsViewModel @Inject constructor(
     private val usecase: SearchArtists
 ) : BaseViewModel() {
 
-    private val artistsLiveData by lazy {
-        val processor = BehaviorProcessor.create<List<Artist>>()
-        processor.offer(listOf())
-        processor
-    }
+    private val artistsLiveData = BehaviorProcessor.create<List<Artist>>()
     private val networkErrorLiveData = BehaviorProcessor.create<Throwable>()
     private val openAlbumsLiveEvent = PublishProcessor.create<String>()
 
