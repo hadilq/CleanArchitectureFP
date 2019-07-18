@@ -35,8 +35,7 @@ class AlbumDetailsViewModel @Inject constructor(
         Flowable.just(id)
             .compose(usecase.details())
             .flatMap(::keepNewData)
-            .subscribe()
-            .track()
+            .observe()
     }
 
     fun retry() {

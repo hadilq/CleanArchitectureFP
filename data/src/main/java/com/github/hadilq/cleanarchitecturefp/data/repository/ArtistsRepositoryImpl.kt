@@ -16,6 +16,7 @@
  * */
 package com.github.hadilq.cleanarchitecturefp.data.repository
 
+import android.util.Log
 import com.github.hadilq.cleanarchitecturefp.data.datasource.ArtistDataSource
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import com.github.hadilq.cleanarchitecturefp.domain.repository.ArtistsRepository
@@ -41,10 +42,19 @@ class ArtistsRepositoryImpl(
             Flowable.just(it.compose(transformer))
                 .map { f ->
                     Pair(
-                        f.onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() },
+                        f.compose(handleError()),
                         networkErrorsProcessor.firstElement()
                     )
                 }
-                .onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() }
+                .compose(handleError())
+        }
+
+    private fun <U> handleError(): FlowableTransformer<U, U> =
+        FlowableTransformer {
+            it.onErrorResumeNext { e: Throwable ->
+                networkErrorsProcessor.offer(e)
+                Log.e("ArtistsRepositoryImpl", "An error happened", e)
+                Flowable.empty<U>()
+            }
         }
 }

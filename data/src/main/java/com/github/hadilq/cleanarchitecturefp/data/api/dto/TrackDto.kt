@@ -22,7 +22,6 @@ data class TrackDto(
     @SerializedName("id") val id: String,
     @SerializedName("title") val title: String,
     @SerializedName("title_short") val titleShort: String,
-    @SerializedName("album") val album: AlbumDto,
-    @SerializedName("artist") val artist: ArtistDto,
-    @SerializedName("contributors") val contributors: Collection<ArtistDto>
+    @SerializedName("album") val album: AlbumDto?,
+    @SerializedName("contributors") val contributors: Collection<ArtistDto>?
 )

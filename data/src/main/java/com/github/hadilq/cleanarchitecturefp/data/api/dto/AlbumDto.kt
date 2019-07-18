@@ -27,5 +27,5 @@ data class AlbumDto(
     @SerializedName("cover_big") val coverBig: String,
     @SerializedName("cover_xl") val coverXl: String,
     @SerializedName("artist") val artist: ArtistDto?,
-    @SerializedName("track") val tracks: EnvelopDto<TrackDto>?
+    @SerializedName("tracks") val tracks: EnvelopDto<TrackDto>?
 )

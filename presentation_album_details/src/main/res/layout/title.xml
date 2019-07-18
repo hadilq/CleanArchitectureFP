@@ -3,30 +3,48 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
 
     <TextView
             android:id="@+id/albumTitleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard"
+            android:layout_marginLeft="@dimen/standard"
+            android:layout_marginRight="@dimen/standard"
+            android:textAppearance="@style/Title"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
 
     <TextView
             android:id="@+id/artistNameView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/standard"
+            android:layout_marginRight="@dimen/standard"
+            android:textAppearance="@style/Body1Gray"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
 
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_double"
+            android:layout_marginBottom="@dimen/standard"
+            android:layout_marginLeft="@dimen/standard"
+            android:layout_marginRight="@dimen/standard"
+            android:textAppearance="@style/Body2"
             android:text="@string/volume1"
             />
 
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:background="@color/gray"
+            android:layout_marginBottom="@dimen/standard"
             />
 
 </LinearLayout>

@@ -20,7 +20,6 @@ data class Track(
     val id: String,
     val title: String,
     val titleShort: String,
-    val album: Album,
-    val artist: Artist,
-    val contributors: Collection<Artist>
+    val album: Album?,
+    val contributors: Collection<Artist>?
 )

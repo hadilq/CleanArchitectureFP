@@ -1,6 +1,7 @@
 package com.github.hadilq.presentationalbumdetails
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
@@ -37,9 +38,19 @@ class AlbumDetailsActivity : BaseActivity() {
             networkErrorLiveData().observe(::onNetworkError)
         }
 
+        setupBackButton()
         setupRecyclerView()
         setupAlbum()
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
 
     private fun albumArrived(album: Album) {
         adapter.removeAll(BaseViewData.ViewType.TITLE)
@@ -51,12 +62,20 @@ class AlbumDetailsActivity : BaseActivity() {
 
     private fun tracksArrived(tracks: List<Track>) {
         adapter.removeAll(BaseViewData.ViewType.TRACK)
-        adapter.addAll(tracks.map { TrackViewData(it) })
+        adapter.addAll(tracks.mapIndexed { index: Int, track: Track -> TrackViewData(track, index + 1) })
         adapter.notifyDataSetChanged()
     }
 
     private fun onNetworkError(@Suppress("UNUSED_PARAMETER") throwable: Throwable) {
         showFailure(albumDetailsLayout, R.string.network_error, viewModel::retry)
+    }
+
+    private fun setupBackButton() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = null
+        collapsingToolbarLayout.title = null
+
     }
 
     private fun setupRecyclerView() {

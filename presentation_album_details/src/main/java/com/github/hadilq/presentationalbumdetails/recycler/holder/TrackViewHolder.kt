@@ -14,11 +14,16 @@ class TrackViewHolder @Inject constructor(
 ) : BaseViewHolder(parent.inflate(R.layout.track)) {
 
     private var track: Track? = null
+    private var number: Int? = null
 
     override fun bindTo(data: BaseViewData) {
-        track = (data as TrackViewData).track
+        (data as TrackViewData).let {
+            track = it.track
+            number = it.number
+        }
 
         itemView.titleView.text = track?.title
         itemView.artistsView.text = track?.contributors?.fold("") { acc, a -> "$acc, ${a.name}" }?.removePrefix(", ")
+        itemView.numberView.text = number?.toString()
     }
 }

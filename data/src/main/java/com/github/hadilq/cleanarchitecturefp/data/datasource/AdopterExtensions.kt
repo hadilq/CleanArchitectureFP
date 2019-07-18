@@ -49,7 +49,6 @@ fun TrackDto.map(): Track = Track(
     id = id,
     title = title,
     titleShort = titleShort,
-    album = album.map(),
-    artist = artist.map(),
-    contributors = contributors.map { it.map() }
+    album = album?.map(),
+    contributors = contributors?.map { it.map() }
 )

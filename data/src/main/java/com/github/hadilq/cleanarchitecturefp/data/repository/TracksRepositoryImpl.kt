@@ -16,6 +16,7 @@
  * */
 package com.github.hadilq.cleanarchitecturefp.data.repository
 
+import android.util.Log
 import com.github.hadilq.cleanarchitecturefp.data.datasource.TrackDataSource
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
 import com.github.hadilq.cleanarchitecturefp.domain.repository.TracksRepository
@@ -35,10 +36,19 @@ class TracksRepositoryImpl(
             Flowable.just(it.compose(dataSource.fetchTrack()))
                 .map { f ->
                     Pair(
-                        f.onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() },
+                        f.compose(handleError()),
                         networkErrorsProcessor.firstElement()
                     )
                 }
-                .onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() }
+                .compose(handleError())
+        }
+
+    private fun <U> handleError(): FlowableTransformer<U, U> =
+        FlowableTransformer {
+            it.onErrorResumeNext { e: Throwable ->
+                networkErrorsProcessor.offer(e)
+                Log.e("ArtistsRepositoryImpl", "An error happened", e)
+                Flowable.empty<U>()
+            }
         }
 }

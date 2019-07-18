@@ -37,12 +37,13 @@ class AlbumViewHolder(
         )
     }
 
-    fun bindTo(album: Album) {
+    fun bindTo(a: Album) {
+        album = a
 
-        itemView.titleView.text = album.title
-        album.artist?.let { a ->
+        itemView.titleView.text = a.title
+        a.artist?.let { a ->
             itemView.artistView.text = a.name
         }
-        itemView.coverView.loadFromUrl(picasso, album.coverMedium)
+        itemView.coverView.loadFromUrl(picasso, a.coverMedium)
     }
 }

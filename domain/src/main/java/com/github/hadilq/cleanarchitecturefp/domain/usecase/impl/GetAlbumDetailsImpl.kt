@@ -41,7 +41,8 @@ class GetAlbumDetailsImpl(
                     Flowable.just(albumId)
                         .compose(albumsRepository.fetchAlbum())
                         .map {
-                            val album = it.first.blockingGet()
+                            val album = it.first
+                                .blockingGet()
                             val pair = completeLoadingTracks(album)
                             Triple(Single.just(album), pair.first, it.second.ambWith(pair.second))
                         }

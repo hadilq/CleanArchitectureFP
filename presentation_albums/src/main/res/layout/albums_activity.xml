@@ -18,7 +18,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:title="@string/albums"
                 app:layout_scrollFlags="scroll|snap|enterAlways"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:theme="@style/ToolbarTheme"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 />
     </com.google.android.material.appbar.AppBarLayout>

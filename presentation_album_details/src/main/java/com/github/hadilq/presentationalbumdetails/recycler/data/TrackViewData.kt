@@ -4,5 +4,6 @@ import com.github.hadilq.cleanarchitecturefp.domain.entity.Track
 
 data class TrackViewData(
     val track: Track,
+    val number: Int = 0,
     override val viewHolderType: Int = BaseViewData.ViewType.TRACK.TYPE
 ) : BaseViewData()

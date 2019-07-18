@@ -1,21 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
 
     <TextView
-            android:id="@+id/titleView"
-            android:layout_width="match_parent"
+            android:id="@+id/numberView"
+            android:layout_width="@dimen/standard"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/standard"
+            android:layout_marginRight="@dimen/standard"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:gravity="left"
+            android:textAppearance="@style/Body1"
+            tools:ignore="RtlHardcoded"
+            />
+
+    <TextView
+            android:id="@+id/titleView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_half"
+            android:layout_marginBottom="@dimen/standard_half"
+            android:layout_marginLeft="@dimen/standard"
+            android:layout_marginRight="@dimen/standard"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/numberView"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textAppearance="@style/Body1"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
 
     <TextView
             android:id="@+id/artistsView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/standard_half"
+            android:layout_marginLeft="@dimen/standard"
+            android:layout_marginRight="@dimen/standard"
+            app:layout_constraintTop_toBottomOf="@id/titleView"
+            app:layout_constraintLeft_toRightOf="@+id/numberView"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textAppearance="@style/Body2Gray"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

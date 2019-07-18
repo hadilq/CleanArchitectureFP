@@ -16,6 +16,7 @@
  * */
 package com.github.hadilq.cleanarchitecturefp.data.repository
 
+import android.util.Log
 import com.github.hadilq.cleanarchitecturefp.data.datasource.AlbumDataSource
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
 import com.github.hadilq.cleanarchitecturefp.domain.repository.AlbumsRepository
@@ -36,11 +37,11 @@ class AlbumsRepositoryImpl(
             Flowable.just(it.compose(dataSource.fetchAlbum()))
                 .map { f ->
                     Pair(
-                        f.onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() }.firstOrError(),
+                        f.compose(handleError()).firstOrError(),
                         networkErrorsProcessor.firstElement()
                     )
                 }
-                .onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() }
+                .compose(handleError())
         }
 
     override fun fetchAlbums(): FlowableTransformer<String, Pair<Flowable<Album>, Maybe<Throwable>>> =
@@ -54,10 +55,19 @@ class AlbumsRepositoryImpl(
             Flowable.just(it.compose(transformer))
                 .map { f ->
                     Pair(
-                        f.onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() },
+                        f.compose(handleError()),
                         networkErrorsProcessor.firstElement()
                     )
                 }
-                .onErrorResumeNext { e: Throwable -> networkErrorsProcessor.offer(e); Flowable.empty() }
+                .compose(handleError())
+        }
+
+    private fun <U> handleError(): FlowableTransformer<U, U> =
+        FlowableTransformer {
+            it.onErrorResumeNext { e: Throwable ->
+                networkErrorsProcessor.offer(e)
+                Log.e("ArtistsRepositoryImpl", "An error happened", e)
+                Flowable.empty<U>()
+            }
         }
 }

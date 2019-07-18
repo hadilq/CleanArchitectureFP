@@ -39,8 +39,7 @@ class AlbumsViewModel @Inject constructor(
         Flowable.just(artistId)
             .compose(usecase.albums())
             .flatMap(::keepNewData)
-            .subscribe()
-            .track()
+            .observe()
     }
 
     fun retry() {
@@ -48,8 +47,7 @@ class AlbumsViewModel @Inject constructor(
             .throttleFirst(1, TimeUnit.SECONDS)
             .compose(usecase.nextAlbums())
             .flatMap(::keepNewData)
-            .subscribe()
-            .track()
+            .observe()
     }
 
     fun recyclerViewActions(stream: Observable<Action>) {
@@ -59,8 +57,7 @@ class AlbumsViewModel @Inject constructor(
             .filterTo(AlbumClickAction::class.java)
             .map { it.album }
             .map { openAlbumDetailsLiveEvent.offer(it) }
-            .subscribe()
-            .track()
+            .observe()
     }
 
     private fun keepNewData(pair: Pair<Flowable<Album>, Maybe<Throwable>>): Flowable<Unit> =
