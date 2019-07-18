@@ -16,11 +16,12 @@ class ArtistsActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
-    lateinit var adapter: ArtistsAdapter
+    lateinit var adapterFactory: ArtistsAdapter.ArtistsAdapterFactory
     @Inject
     lateinit var intentFactory: IntentFactory
 
     private lateinit var viewModel: ArtistsViewModel
+    private lateinit var adapter: ArtistsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +52,11 @@ class ArtistsActivity : BaseActivity() {
     }
 
     private fun setupRecyclerView() {
-        artistsView.layoutManager = LinearLayoutManager(this)
-        artistsView.adapter = adapter
-        adapter.actionStream = {
+        adapter = adapterFactory.get {
             viewModel.recyclerViewActions(it)
         }
+        artistsView.layoutManager = LinearLayoutManager(this)
+        artistsView.adapter = adapter
     }
 
     private fun setupSearchView() {

@@ -8,12 +8,12 @@ import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class ArtistsAdapter @Inject constructor(
-    private val factory: ArtistViewHolderFactory
+class ArtistsAdapter(
+    private val factory: ArtistViewHolderFactory,
+    private val actionStream: (Observable<Action>) -> Unit
 ) : RecyclerView.Adapter<ArtistViewHolder>() {
 
     private val list = mutableListOf<Artist>()
-    lateinit var actionStream: (Observable<Action>) -> Unit
 
     fun newList(l: List<Artist>) {
         list.clear()
@@ -29,6 +29,13 @@ class ArtistsAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
         holder.bindTo(list[position])
+    }
+
+    class ArtistsAdapterFactory @Inject constructor(
+        private val factory: ArtistViewHolderFactory
+    ) {
+        fun get(actionStream: (Observable<Action>) -> Unit) =
+            ArtistsAdapter(factory, actionStream)
     }
 
     class ArtistViewHolderFactory @Inject constructor(
