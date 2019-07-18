@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/hadilq/CleanArchitectureFP.svg?style=svg)](https://circleci.com/gh/hadilq/CleanArchitectureFP)
+
 Clean Architecture with functional programming in mind
 ===
 
