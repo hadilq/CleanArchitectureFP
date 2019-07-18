@@ -33,7 +33,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    tools:ignore="RtlHardcoded"
+                    tools:ignore="ContentDescription,RtlHardcoded"
                     />
 
             <ImageView
@@ -47,7 +47,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    tools:ignore="RtlHardcoded"
+                    tools:ignore="ContentDescription,RtlHardcoded"
                     />
 
             <androidx.appcompat.widget.AppCompatEditText

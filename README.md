@@ -40,6 +40,6 @@ Notice
 Here I use `Flowable` to implement `LiveData` in `ViewModule`s by using a class named `RxLifecycleHandler`, because the
 Google implementation of `LiveData` is not handling back pressure and is not a good fit to our FP style.
 
-Tests
+Checks
 ---
-To run all the tests please run `./gradlew clean check`.
+To run all the tests and checks please run `./gradlew clean check`.

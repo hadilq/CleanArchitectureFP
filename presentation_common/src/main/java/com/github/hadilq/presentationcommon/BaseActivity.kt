@@ -1,6 +1,7 @@
 package com.github.hadilq.presentationcommon
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -32,6 +33,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
             snackbar!!.dismiss()
         }
         snackbar = Snackbar.make(view, errorMessage, Snackbar.LENGTH_INDEFINITE)
+            .setActionTextColor(ContextCompat.getColor(this, R.color.white))
             .setAction(R.string.retry) {
                 snackbar = null
                 retry()

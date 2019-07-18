@@ -41,8 +41,8 @@ class AlbumViewHolder(
         album = a
 
         itemView.titleView.text = a.title
-        a.artist?.let { a ->
-            itemView.artistView.text = a.name
+        a.artist?.let { artist ->
+            itemView.artistView.text = artist.name
         }
         itemView.coverView.loadFromUrl(picasso, a.coverMedium)
     }

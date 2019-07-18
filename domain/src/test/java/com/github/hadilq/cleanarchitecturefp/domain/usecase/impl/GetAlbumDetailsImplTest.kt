@@ -63,7 +63,7 @@ class GetAlbumDetailsImplTest {
         //Given
         val artist = Artist("", "Test", "", "", "", "", "")
         val album = Album("", "Test", "", "", "", "", "", artist)
-        val track = Track("", "Test", "", album, artist, emptyList())
+        val track = Track("", "Test", "", album, emptyList())
         `when`(trackRepository.fetchTrack()).doReturn(FlowableTransformer {
             Flowable.just(
                 Pair(
@@ -85,7 +85,7 @@ class GetAlbumDetailsImplTest {
         //Given
         val artist = Artist("", "Test", "", "", "", "", "")
         val album = Album("", "Test", "", "", "", "", "", artist)
-        val track = Track("", "Test", "", album, artist, emptyList())
+        val track = Track("", "Test", "", album, emptyList())
         val flowableFactory: () -> Flowable<Pair<Flowable<Track>, Maybe<Throwable>>> = mock()
         `when`(trackRepository.fetchTrack()).doReturn(
             FlowableTransformer {
