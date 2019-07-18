@@ -25,7 +25,15 @@ import io.reactivex.Single
 
 interface GetAlbumDetails {
 
+    /**
+     * Returns a lazy function, where gets albumId as a string
+     * then returns a triple of the album, a lazy list of tracks, and network error.
+     */
     fun details(): FlowableTransformer<String, Triple<Single<Album>, Flowable<Track>, Maybe<Throwable>>>
 
+    /**
+     * Returns a lazy function, where gets trackId as a string
+     * then returns a pair of the track and network error.
+     */
     fun track(): FlowableTransformer<String, Pair<Flowable<Track>, Maybe<Throwable>>>
 }

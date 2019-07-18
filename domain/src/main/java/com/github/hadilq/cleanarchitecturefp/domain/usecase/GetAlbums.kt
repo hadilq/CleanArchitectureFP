@@ -24,7 +24,15 @@ import io.reactivex.Maybe
 
 interface GetAlbums {
 
+    /**
+     * Returns a lazy function, where gets artistId as a string
+     * then returns a pair of a lazy list of albums and network error.
+     */
     fun albums(): FlowableTransformer<String, Pair<Flowable<Album>, Maybe<Throwable>>>
 
+    /**
+     * Returns a lazy function, where complete the work of the last call of [albums] method
+     * then returns a pair of a lazy list of albums and network error.
+     */
     fun nextAlbums(): FlowableTransformer<Unit, Pair<Flowable<Album>, Maybe<Throwable>>>
 }

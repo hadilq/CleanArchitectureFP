@@ -21,5 +21,9 @@ import io.reactivex.FlowableTransformer
 
 interface TrackDataSource {
 
+    /**
+     * Returns a lazy function, where gets trackId as a string
+     * then returns the track.
+     */
     fun fetchTrack(): FlowableTransformer<String, Track>
 }

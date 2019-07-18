@@ -17,7 +17,6 @@
 package com.github.hadilq.cleanarchitecturefp.domain.repository
 
 import com.github.hadilq.cleanarchitecturefp.domain.entity.Album
-import com.github.hadilq.cleanarchitecturefp.domain.entity.Artist
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.Maybe
@@ -25,9 +24,21 @@ import io.reactivex.Single
 
 interface AlbumsRepository {
 
+    /**
+     * Returns a lazy function, where gets albumId as a string
+     * then returns a pair of album and network error.
+     */
     fun fetchAlbum(): FlowableTransformer<String, Pair<Single<Album>, Maybe<Throwable>>>
 
+    /**
+     * Returns a lazy function, where gets artistId as a string
+     * then returns a pair of a lazy list of albums and network error.
+     */
     fun fetchAlbums(): FlowableTransformer<String, Pair<Flowable<Album>, Maybe<Throwable>>>
 
+    /**
+     * Returns a lazy function, where complete the work of the last call of [fetchAlbums] method
+     * then returns a pair of a lazy list of albums and network error.
+     */
     fun fetchNextAlbums(): FlowableTransformer<Unit, Pair<Flowable<Album>, Maybe<Throwable>>>
 }

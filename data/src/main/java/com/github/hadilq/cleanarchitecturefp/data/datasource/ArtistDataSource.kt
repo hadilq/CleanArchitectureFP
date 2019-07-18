@@ -21,7 +21,15 @@ import io.reactivex.FlowableTransformer
 
 interface ArtistDataSource {
 
+    /**
+     * Returns a lazy function, where gets search query as a string
+     * then returns a pair of a lazy list of artists and network error.
+     */
     fun fetchArtists(): FlowableTransformer<String, Artist>
 
+    /**
+     * Returns a lazy function, where complete the work of the last call of [fetchArtists] method
+     * then returns a lazy list of artists.
+     */
     fun fetchNextArtists(): FlowableTransformer<Unit, Artist>
 }

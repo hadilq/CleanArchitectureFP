@@ -23,7 +23,15 @@ import io.reactivex.Maybe
 
 interface SearchArtists {
 
+    /**
+     * Returns a lazy function, where gets a search query as a string
+     * then returns a pair of a lazy list of artists and network error.
+     */
     fun findArtists(): FlowableTransformer<String, Pair<Flowable<Artist>, Maybe<Throwable>>>
 
+    /**
+     * Returns a lazy function, where complete the work of the last call of [findArtists] method
+     * then returns a pair of a lazy list of artists and network error.
+     */
     fun findNextArtists(): FlowableTransformer<Unit, Pair<Flowable<Artist>, Maybe<Throwable>>>
 }

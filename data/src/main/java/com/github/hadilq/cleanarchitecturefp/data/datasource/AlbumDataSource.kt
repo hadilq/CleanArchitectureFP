@@ -22,9 +22,21 @@ import io.reactivex.FlowableTransformer
 
 interface AlbumDataSource {
 
+    /**
+     * Returns a lazy function, where gets albumId as a string
+     * then returns the album.
+     */
     fun fetchAlbum(): FlowableTransformer<String, Album>
 
+    /**
+     * Returns a lazy function, where gets artistId as a string
+     * then returns a lazy list of albums.
+     */
     fun fetchAlbums(): FlowableTransformer<String, Album>
 
+    /**
+     * Returns a lazy function, where complete the work of the last call of [fetchAlbums] method
+     * then returns a lazy list of albums.
+     */
     fun fetchNextAlbums(): FlowableTransformer<Unit, Album>
 }

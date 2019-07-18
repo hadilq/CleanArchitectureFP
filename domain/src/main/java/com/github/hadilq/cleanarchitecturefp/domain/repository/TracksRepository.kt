@@ -23,5 +23,9 @@ import io.reactivex.Maybe
 
 interface TracksRepository {
 
+    /**
+     * Returns a lazy function, where gets trackId as a string
+     * then returns a pair of the track and network error.
+     */
     fun fetchTrack(): FlowableTransformer<String, Pair<Flowable<Track>, Maybe<Throwable>>>
 }
